@@ -71,7 +71,7 @@
 
 
             try{
-                const res = await fetch('http://localhost:3000/quizzes/quiz/'+eform.dataset.delete, {
+                const res = await fetch('/quizzes/quiz/'+eform.dataset.delete, {
                 method: 'DELETE',
                 credentials: "include",
                 headers: {
