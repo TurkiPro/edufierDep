@@ -58,7 +58,7 @@ const router = express.Router();
              });
              post.save(function(err) {
               if(err) {console.log(err)}
-                res.redirect('/')
+              res.redirect('/posts/')
              })
             })
    
@@ -73,8 +73,9 @@ const router = express.Router();
 
     function check_user(header){
       let token = header.cookies.Authorization;
+      console.log(token)
       if (!token) {
-          next();
+          return responseHandler(null, res, 'Server Error', 500);
       }
       try {
           if (token.includes("Bearer")) {
