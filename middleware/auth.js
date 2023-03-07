@@ -19,7 +19,7 @@ module.exports.verifyToken = function (req, res, next) {
         req.user = decoded;
         next();
     } catch (ex) {
-        console.log(ex + 'test')
+        console.log(ex + 'verify token')
         responseHandler(null, res, "Unauthorized", 401);
     }
 };
@@ -30,7 +30,7 @@ module.exports.verifyAuth = function (req, res, next) {
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
     //if no token found, return response (without going to the next middelware)
     if (!token) {
-        next();
+       return next();
     }
     try {
         if (token.includes("Bearer")) {
@@ -41,7 +41,7 @@ module.exports.verifyAuth = function (req, res, next) {
         req.user = decoded;
         return res.redirect('/dashboard')
     } catch (ex) {
-        console.log(ex + 'test')
+        console.log(ex + 'verifyauth')
         responseHandler(null, res, "Unauthorized", 401);
     }
 };
@@ -52,7 +52,7 @@ module.exports.destroyAuth = function (req, res, next) {
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
     //if no token found, return response (without going to the next middelware)
     if (!token) {
-        next();
+        return next();
     }
     try {
         if (token.includes("Bearer")) {
@@ -69,7 +69,7 @@ module.exports.destroyAuth = function (req, res, next) {
         })
         .redirect('/')
     } catch (ex) {
-        console.log(ex + 'test')
+        console.log(ex + 'destroyauth')
         responseHandler(null, res, "Unauthorized", 401);
     }
 };

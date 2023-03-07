@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- custom Style css -->
+    <link rel="stylesheet" type="text/css" href="/css/style2.css">
+    <title>Fodix | Gamification</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3 col-xl-2 px-sm-2 px-0 bg-light dashboard_bg sticky-top">
+                <div class="d-flex flex-sm-column flex-row flex-nowrap  align-items-center sticky-top">
+                    <a href="/dashboard" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                        <img src="/assets/logo.svg" alt="">
+                    </a>
+                    <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 align-items-center">
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 13H10C10.2652 13 10.5196 12.8946 10.7071 12.7071C10.8946 12.5196 11 12.2652 11 12V4C11 3.73478 10.8946 3.48043 10.7071 3.29289C10.5196 3.10536 10.2652 3 10 3H4C3.73478 3 3.48043 3.10536 3.29289 3.29289C3.10536 3.48043 3 3.73478 3 4V12C3 12.2652 3.10536 12.5196 3.29289 12.7071C3.48043 12.8946 3.73478 13 4 13ZM3 20C3 20.2652 3.10536 20.5196 3.29289 20.7071C3.48043 20.8946 3.73478 21 4 21H10C10.2652 21 10.5196 20.8946 10.7071 20.7071C10.8946 20.5196 11 20.2652 11 20V16C11 15.7348 10.8946 15.4804 10.7071 15.2929C10.5196 15.1054 10.2652 15 10 15H4C3.73478 15 3.48043 15.1054 3.29289 15.2929C3.10536 15.4804 3 15.7348 3 16V20ZM13 20C13 20.2652 13.1054 20.5196 13.2929 20.7071C13.4804 20.8946 13.7348 21 14 21H20C20.2652 21 20.5196 20.8946 20.7071 20.7071C20.8946 20.5196 21 20.2652 21 20V13C21 12.7348 20.8946 12.4804 20.7071 12.2929C20.5196 12.1054 20.2652 12 20 12H14C13.7348 12 13.4804 12.1054 13.2929 12.2929C13.1054 12.4804 13 12.7348 13 13V20ZM14 10H20C20.2652 10 20.5196 9.89464 20.7071 9.70711C20.8946 9.51957 21 9.26522 21 9V4C21 3.73478 20.8946 3.48043 20.7071 3.29289C20.5196 3.10536 20.2652 3 20 3H14C13.7348 3 13.4804 3.10536 13.2929 3.29289C13.1054 3.48043 13 3.73478 13 4V9C13 9.26522 13.1054 9.51957 13.2929 9.70711C13.4804 9.89464 13.7348 10 14 10Z" fill="currentColor"/>
+                                        <defs>
+                                            <linearGradient id="paint0_linear_622_541" x1="12" y1="3" x2="12" y2="21" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="currentColor"/>
+                                                <stop offset="1" stop-color="currentColor"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                        
+                                    Dashboard
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <div>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.6515 20.4054C20.2043 20.2902 20.5336 19.7117 20.2589 19.2183C19.6533 18.1307 18.6993 17.1749 17.4788 16.4465C15.907 15.5085 13.9812 15 12 15C10.0188 15 8.09292 15.5085 6.52112 16.4465C5.30069 17.1749 4.34666 18.1307 3.74108 19.2183C3.46638 19.7117 3.79562 20.2902 4.34843 20.4054C9.39524 21.4572 14.6047 21.4572 19.6515 20.4054Z" fill="currentColor"/>
+                                    <circle cx="12" cy="8" r="5" fill="currentColor"/>
+                                </svg>                                    
+                                Profile
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="None" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.94246 10.6872C9.91195 9.91075 9.91762 9.09875 9.93431 8.42186C10.5289 8.74586 11.2349 9.14694 11.8921 9.5616C12.3721 9.86449 12.8095 10.1643 13.1527 10.4379C13.5227 10.733 13.6888 10.9248 13.7321 10.9999C13.7755 11.0749 13.8585 11.3147 13.9291 11.7827C13.9945 12.2167 14.0354 12.7453 14.0577 13.3125C14.0882 14.089 14.0825 14.901 14.0658 15.5779C13.4713 15.2539 12.7652 14.8528 12.108 14.4381C11.628 14.1352 11.1906 13.8355 10.8475 13.5618C10.4775 13.2667 10.3114 13.0749 10.268 12.9999C10.2247 12.9248 10.1416 12.6851 10.0711 12.2171C10.0057 11.7831 9.96474 11.2544 9.94246 10.6872Z" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                English
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.08168 13.9445C2.55298 12.9941 2.28862 12.5188 2.28862 12C2.28862 11.4812 2.55298 11.0059 3.08169 10.0555L4.43094 7.63L5.85685 5.24876C6.4156 4.31567 6.69498 3.84912 7.14431 3.5897C7.59364 3.33028 8.13737 3.3216 9.22483 3.30426L12 3.26L14.7752 3.30426C15.8626 3.3216 16.4064 3.33028 16.8557 3.5897C17.305 3.84912 17.5844 4.31567 18.1431 5.24876L19.5691 7.63L20.9183 10.0555C21.447 11.0059 21.7114 11.4812 21.7114 12C21.7114 12.5188 21.447 12.9941 20.9183 13.9445L19.5691 16.37L18.1431 18.7512C17.5844 19.6843 17.305 20.1509 16.8557 20.4103C16.4064 20.6697 15.8626 20.6784 14.7752 20.6957L12 20.74L9.22483 20.6957C8.13737 20.6784 7.59364 20.6697 7.14431 20.4103C6.69498 20.1509 6.4156 19.6843 5.85685 18.7512L4.43094 16.37L3.08168 13.9445Z" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                </svg>                                    
+                                Settings
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/posts" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="None" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.94246 10.6872C9.91195 9.91075 9.91762 9.09875 9.93431 8.42186C10.5289 8.74586 11.2349 9.14694 11.8921 9.5616C12.3721 9.86449 12.8095 10.1643 13.1527 10.4379C13.5227 10.733 13.6888 10.9248 13.7321 10.9999C13.7755 11.0749 13.8585 11.3147 13.9291 11.7827C13.9945 12.2167 14.0354 12.7453 14.0577 13.3125C14.0882 14.089 14.0825 14.901 14.0658 15.5779C13.4713 15.2539 12.7652 14.8528 12.108 14.4381C11.628 14.1352 11.1906 13.8355 10.8475 13.5618C10.4775 13.2667 10.3114 13.0749 10.268 12.9999C10.2247 12.9248 10.1416 12.6851 10.0711 12.2171C10.0057 11.7831 9.96474 11.2544 9.94246 10.6872Z" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Community
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-block logout">
+                    <a href="/logout" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.1667 13.8333L17.5 10.4999M17.5 10.4999L14.1667 7.16659M17.5 10.4999H5.83333M10.8333 13.8333V14.6666C10.8333 15.3296 10.5699 15.9655 10.1011 16.4344C9.63226 16.9032 8.99637 17.1666 8.33333 17.1666H5C4.33696 17.1666 3.70107 16.9032 3.23223 16.4344C2.76339 15.9655 2.5 15.3296 2.5 14.6666V6.33325C2.5 5.67021 2.76339 5.03433 3.23223 4.56549C3.70107 4.09664 4.33696 3.83325 5 3.83325H8.33333C8.99637 3.83325 9.63226 4.09664 10.1011 4.56549C10.5699 5.03433 10.8333 5.67021 10.8333 6.33325V7.16659" stroke="url(#paint0_linear_322_402)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_322_402" x1="10" y1="3.83325" x2="10" y2="17.1666" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="currentColor"/>
+                            <stop offset="1" stop-color="currentColor"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+                        log out
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm p-3 min-vh-100">
+                    <h2 class="px-3">Gamification</h2>
+                <div class="container courses_container">
+                    <div class="row justify-content-center video_container">
+                        <div id="player"></div>
+                        <script src="https://www.youtube.com/player_api"></script>
+
+                        <script>
+                            let points = 0;
+                            // create youtube player
+                            let player;
+                            function onYouTubePlayerAPIReady() {
+                                player = new YT.Player('player', {
+                                videoId: 'ELavuz3btaE',
+                                events: {
+                                    'onStateChange': onPlayerStateChange
+                                }
+                                });
+                            }
+
+
+                            // when video ends
+                            function onPlayerStateChange(event) {        
+                                if(event.data === 0) {            
+                                    points+= 5;
+                                    const quizBtn = document.querySelector('#quiz');
+                                    quizBtn.classList.remove('btn-disabled');
+                                    quizBtn.classList.add('btn-enabled');
+                                    const pointsadd = document.querySelector('span');
+                                    pointsadd.innerHTML = points
+                                }
+                            }
+                        </script>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col text-center">
+                            <div>
+                                <button id="quiz" class="btn-disabled start-btn" type="button" onclick="myFunction()">Start the quiz</button>
+                            </div>
+                            <div class="points">
+                                <p>Your points:</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+    <!-- 1 -->
+    <div class="mt-5" id="question1" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-0">
+                <div class="container2">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px">To make something boring more appealing and gain sense of accoplishment</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-2">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt0">
+                            <label for="opt0" id="lb0">challange your self a progress/leveling up bar</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt1">
+                            <label for="opt1" id="lb1">never do it</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt2">
+                            <label for="opt2" id="lb1">leave it as is</label>
+                        </div>
+                    </form>
+                </div>
+
+                <button class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ2">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="mt-5" id="question2" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px; font-size: 22px;">Gamification can enhace creativity and get a better feedback</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt3">
+                            <label for="opt3" id="lb1">No</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt4">
+                            <label for="opt4" id="lb0">Yes</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt5">
+                            <label for="opt5" id="lb1">Waste of time</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ3">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="mt-5" id="question3" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px">The idea of making anything has more meaning or purpose is refered to </p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt6">
+                            <label for="opt6" id="lb1">Development meaning</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt7">
+                            <label for="opt7" id="lb1">Great meaning</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt8">
+                            <label for="opt8" id="lb0">Epic meaning </label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ4">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="mt-5" id="question4" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px">Loss and avoidance concept makes you</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt9">
+                            <label for="opt9" id="lb1">Motivated to get lower scores and avoid lossing</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt10">
+                            <label for="opt10" id="lb1">Motivated to get high scores and lose anyway</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt11">
+                            <label for="opt11" id="lb0">Motivated to get high scores and avoid lossing</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ5">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="mt-5" id="question5" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px; font-size: 22px;">Games makes you get excited when the</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt12">
+                            <label for="opt12" id="lb0">rewards are predictable</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt13">
+                            <label for="opt13" id="lb0">rewards are unpredictable</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt14">
+                            <label for="opt14" id="lb1">rewards are easy to obtain</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ6">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="mt-5" id="question6" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px">Gamification make things fun by</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt15">
+                            <label for="opt15" id="lb0">taking ownership of your outcome, process and beliefs</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt16">
+                            <label for="opt16" id="lb1">being unresposible</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt17">
+                            <label for="opt17" id="lb1">stressing</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToQ7">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="mt-5" id="question7" style="display: none">
+        <div class="container centered contentDiv">
+            <div class="text-center mb-4">
+                <div class="container1">
+                    <div class="questionDiv">
+                        <p style="padding-bottom: 10px">The secret thing to sustain our productivity is</p>
+                    </div>
+                </div>
+
+                <div class="error-msg pt-3"></div>
+
+                <div class="choice radio-toolbar pt-4">
+                    <form name="form">
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt18">
+                            <label for="opt18" id="lb1">Sleep</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="0" id="opt19">
+                            <label for="opt19" id="lb0">Keep working</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="options" value="5" id="opt20">
+                            <label for="opt20" id="lb1">Make it more fun to do</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="next-button"><button
+                        class="btn btn-dangedr btn-lg btn-next border-0 mt-2 clickToResult">Next</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- result -->
+    <div id="result" style="display: none">
+        <div class="container resultDiv centered">
+            <div class="container1">
+                <div class="centered show-result centered"></div>
+            </div>
+        </div>
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+            function myFunction(){
+                let ytPlayer = document.querySelector(".video_container");
+                ytPlayer.classList.add('player-hidden');
+                question1.style.display = 'block'
+                const quizBtn = document.querySelector('#quiz');
+                quizBtn.style.display= 'none';
+            }
+    </script>
+    <script src="/assets/main.js"></script>
+    <!-- bootstrap script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo "
+        crossorigin="anonymous "></script>
+</body>
+</html>

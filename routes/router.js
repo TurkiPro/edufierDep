@@ -27,6 +27,9 @@ module.exports.default = (app) => {
     app.use("/courses", course);
     app.use("/lessons", lesson);
     app.use("/quizzes", quiz);
+    app.get("/course/gamifier", function(req, res){
+        res.render('course/gamefier')
+    });
 
     app.get('*', function(req, res){
         res.status(404).send('Error 404, Not found');
