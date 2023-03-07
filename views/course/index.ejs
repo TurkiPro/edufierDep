@@ -71,21 +71,24 @@
         
         window.onload=function() {
         const eform = document.querySelector('#deleteBtn');
-        eform.addEventListener('click', event =>{
+        eform.addEventListener('click', async event =>{
             event.preventDefault();
 
 
-            fetch('http://localhost:3000/courses/course/'+eform.dataset.delete, {
+            try{
+                const res = await fetch('http://localhost:3000/courses/course/'+eform.dataset.delete, {
                 method: 'DELETE',
                 credentials: "include",
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
-            }).then(res => res.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error));
-            location.reload() 
+            }) 
+                const resData = await res.json()
+                console.log(resData)
+                location.reload() 
+            } catch (err) {
+                console.log(err.message)
+            }
         })
     }
     </script>

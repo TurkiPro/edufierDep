@@ -29,7 +29,7 @@ module.exports.default = (app) => {
     app.use("/quizzes", quiz);
 
     app.get('*', function(req, res){
-        res.status(404).send('Not found');
+        res.status(404).send('Error 404, Not found');
       });
     app.use(useErrorHandler);
 };
