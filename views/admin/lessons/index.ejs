@@ -1,29 +1,29 @@
-<%- include('../header.ejs') -%>
+<%- include('../../header.ejs') -%>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <%- include('../nav.ejs') -%>
+            <%- include('../../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
-                <div class="container ">
-                    <% courses.forEach(function(course, i){ %>
+                <div class="container">
+                    <% courses.lessons.forEach(function(lesson, i){ %>
                         <div class="row mt-3">
                             <div class="col-4">
-                                <a href="/courses/course/<%= course.id %>">
-                                    <h3><%= course.name %> </h3>
-                                    <h4><%= course.isActive %> </h4>
+                                <a href="/lessons/lesson/<%= lesson.id %>">
+                                    <h3><%= lesson.name %> </h3>
+                                    <h4><%= lesson.data %> </h4>
                                 </a>
                             </div>
                             <div class="col-2">
-                                <a href="/lessons/course/<%= course.id %>/lesson/new" target="_blank">add a lesson</a>
+                                <a href="/quizzes/lesson/<%= lesson.id %>/quiz/new" target="_blank">add a quiz</a>
                             </div>
                             <div class="col-2">
-                                <a href="/courses/course/<%= course.id %>/lessons" target="_blank">all course lessons</a>
+                                <a href="/lessons/lesson/<%= lesson.id %>/quizzes/" target="_blank">all lesson quizzes</a>
                             </div>
                             <div class="col-2">
-                                <a href="/courses/course/<%= course.id %>/edit" target="_blank">edit</a>
+                                <a href="" target="_blank">edit</a>
                             </div>
                             <div class="col-2">
-                                <a onclick="deleteWindow(this)" data-id="<%= course.id %>">delete</a>
+                                <a onclick="deleteWindow(this)" data-id="<%= lesson.id %>">delete</a>
                             </div>
                         </div>
                     <% }); %>
@@ -75,7 +75,7 @@
             event.preventDefault();
 
 
-            fetch('http://localhost:3000/courses/course/'+eform.dataset.delete, {
+            fetch('http://localhost:3000/lessons/lesson/'+eform.dataset.delete, {
                 method: 'DELETE',
                 credentials: "include",
                 headers: {

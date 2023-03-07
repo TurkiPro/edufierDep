@@ -4,19 +4,22 @@
         <div class="row">
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
-                <div class="container comments_container">
-                    <div class="row mt-3">
-                        <h3><%= course.name %> </h3>
-                        <h3><%= course.isActive %> </h3>
-                    </div>
-                    <% lessons.forEach(function(lesson, i){ %>
-                    <a href="/lessons/lesson/<%= lesson.id %>" target="_blank">
+                <div class="container posts_container">
+                    <% quizzes.forEach(function(quiz, i){ %>
+                    <a href="/quizzes/quiz/<%= quiz.id %>">
                         <div class="row mt-3">
-                            <h3><%= lesson.name %> </h3>
-                            <h5><%= lesson.typeOfLesson %></h5>
+                            <div class="col-10">
+                                <h3><%= quiz.name %> </h3>
+                                <h4><%= quiz.data %> </h4>
+                            </div>
                         </div>
                     </a>
                     <% }); %>
+                    <!-- <div class="row mt-5">
+                        <div class="d-flex justify-content-center">
+                            <a href="/posts/new" class="d-flex align-items-center justify-content-between"> <span>Ask Something</span>  <i class="bi bi-telegram"></i></a>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>

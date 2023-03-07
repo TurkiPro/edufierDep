@@ -12,13 +12,7 @@
                     <%} else  { %>
                     <p> Other type </p>
                     <% } %>
-                    <% if (nextLesson !== undefined ) { %>
-                        <a href="/lessons/lesson/<%= information.id %>/next">Next lesson</a>
-                    <% } %>
-                    <br>
-                    <% if (quiz !== undefined ) { %>
-                        <a href="/quizzes/quiz/<%= quiz %>">start quiz</a>
-                    <% } %>
+                    <a href="/lessons/lesson/<%= information.id %>/next">Next quiz</a>
                 </div>
             </div>
         </div>

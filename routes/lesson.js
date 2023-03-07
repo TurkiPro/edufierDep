@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const Course = require("../models/courses");
 const Lesson = require("../models/lessons");
+const Quiz = require("../models/quizzes");
 const router = express.Router();       
 
 
@@ -10,6 +11,15 @@ const router = express.Router();
         // fetchName = id => {
         //   return User.findOne({_id: id}).then(user => user.name);
         // };
+        router.get('/lesson/:id/quizzes/', async (req, res) => {
+            const lessonId = req.params.id;
+            await Lesson.findById(lessonId)                    
+                .populate('quizzes')
+                .exec(async function (err, results) {
+                  if (err) { console.log(err); };
+                  res.render('admin/quizzes/index', {title: 'All quizzes', lessons: results})
+                })
+           })
         router.get('/course/:id/lesson/new', (req, res) => {
             res.render('lesson/create', {title: 'Create a lesson', courseId: req.params.id})
            })
@@ -45,9 +55,24 @@ const router = express.Router();
 
         router.get('/lesson/:id', async (req, res) => {
             let lessonId = req.params.id;
+            let checker = undefined;
             await Lesson.findById(lessonId)
-                .then(lesson => {
-                    res.render('lesson/show', {title: lesson.name, information: lesson})
+                .then(async lesson => {
+                    await Course.findById(lesson.course).then(course =>{
+                        for (let i = 0; i < course.lessons.length; i++) {
+                            if(course.lessons[i]._id == lessonId){
+                                if(course.lessons[i+1] !== undefined){
+                                    checker = true;
+                                }
+                            }
+                        }
+                        if (lesson.quizzes.length){
+                            res.render('lesson/show', {title: lesson.name, information: lesson, quiz: lesson.quizzes[0], nextLesson: checker})
+                        }
+                        res.render('lesson/show', {title: lesson.name, information: lesson, quiz: undefined, nextLesson: checker})
+                    }).catch(error => {
+                        res.json({ error: error })
+                    })  
                 })
                 .catch(error => {
                     res.json({ error: error })
@@ -60,6 +85,61 @@ const router = express.Router();
                 if(err) {console.log(err)}
                 res.render('lesson/index', {title: 'All Lessons', courses: results})
              })
+         });
+
+        router.get('/lesson/:id/next', async (req, res) => {
+            let lessonId = req.params.id;
+            await Lesson.findById(lessonId)
+                .then(async lesson => {
+                    await Course.findById(lesson.course).then(course =>{
+                    //    let nextLesson = Course.aggregate([{
+                    //     $match: { _id: course._id }
+                    //     },
+                    //     {$project: 
+                    //         {
+                    //             index: {
+                    //                  $map: { input: "$lessons", as: "lesson", in: [ {$eq: ["$$lesson", lesson._id] } ] } 
+                    //             }
+                    //         }
+                    //     }
+                    //     ]).exec((err, locations) => {
+                    //         if (err) throw err;
+                    //         console.log('here3')
+                    //         console.log(locations);
+                    //         res.json({locations})
+                    //     })
+                    if (course.lessons.length){
+                        for (let i = 0; i < course.lessons.length; i++) {
+                            if(course.lessons[i]._id == lessonId){
+                                if(course.lessons[i+1] !== undefined){
+                                    return res.redirect('/lessons/lesson/'+course.lessons[i+1]) 
+                                }else{
+                                    return res.redirect('/lessons/lesson/'+lessonId) 
+                                }
+                            }
+                        }
+                    }
+                    })
+                    
+                })
+        });
+
+        router.delete('/lesson/:id', async (req, res) => {
+            let lessonId = req.params.id;
+            await Lesson.findByIdAndDelete(lessonId)
+                .then(async lesson => {
+                    await Course.findById(lesson.course).then(course => {
+                        course.lessons.pull(lessonId);
+                    })
+                    if (lesson.quizzes.length){
+                        for (const quiz of lesson.quizzes) {
+                            await Quiz.findByIdAndDelete(quiz._id)
+                        }
+                    }
+                })
+                .catch(error => {
+                    res.json({ error: error })
+                })
          });
 
         function check_user(header){

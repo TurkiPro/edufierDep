@@ -1,0 +1,44 @@
+<%- include('../header.ejs') -%>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../nav.ejs') -%>
+            <div class="col-sm p-3 min-vh-100">
+                <div class="container">
+                    <form action="/quizzes/lesson/<%= lessonId %>/quiz/new" method="post" class="form-signin creation">
+                        <div class="form-group">
+                          <label for="name">Name of the Quizz</label>
+                          <input type="text" class="form-control" name="name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Which type you would like to use?</label>
+                            <br>
+                            <input name="quizType" type="radio" value="1" onclick="mcq()" /> MCQ
+                            <input name="quizType" type="radio" value="2" onclick="trueFalse()" /> True/False
+                            <br>
+                            <div id="data-input">
+
+                            </div>
+                            <!-- <input name="lessonType" type="radio" value="2" /> False -->
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bootstrap script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+    <script>
+        function mcq(){
+            document.getElementById('data-input').innerHTML = ''
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter youtube identifier">';
+        }
+        function trueFalse(){
+            document.getElementById('data-input').innerHTML = ''
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter quiz question"><label for="name">Choose the correct answer</label> <input name="answer" type="radio" value="true" />True <input name="answer" type="radio" value="false" />False';
+        }
+    </script>
+</body>
+</html>

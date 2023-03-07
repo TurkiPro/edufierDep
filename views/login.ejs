@@ -61,14 +61,11 @@
             body: JSON.stringify({ email: username.value, password: password.value }),
             headers: { 'Content-Type': 'application/json' }
             })
-            console.log('before')
           const data = await res.json()
-          console.log('here')
           if (res.status === 400 || res.status === 401) {
             return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
           }
           console.log(data)
-        //   data.role === "admin" ? location.assign('/admin') : location.assign('/basic')
         location.assign('/dashboard')
         } catch (err) {
             console.log(err.message)

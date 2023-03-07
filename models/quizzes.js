@@ -6,6 +6,18 @@ const quizSchema = new mongoose.Schema({
       trim: true,
       required: true
    },
+   typeOfQuiz: {
+      type: Number,
+      required: true
+   },
+   data:{
+      type: Array
+   },
+   answer: {
+      type: String,
+      trim: true,
+      required: true
+   },
 date: {
       type: Date,
       default: Date.now

@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const Course = require("../models/courses");
 const courseController = require("../controllers/api/course");
+const lessons = require("../models/lessons");
+const Quiz = require("../models/quizzes");
 const router = express.Router();       
 
 router.route("/fetchcourses").get(courseController.index)
@@ -42,7 +44,16 @@ router.route("/fetchcourses").get(courseController.index)
         //           res.render('course/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername });
         //         })
         //     })
-   
+        router.get('/course/:id/lessons/', async (req, res) => {
+          const courseId = req.params.id;
+          await Course.findById(courseId)                    
+              .populate('lessons')
+              .exec(async function (err, results) {
+                if (err) { console.log(err); };
+                res.render('admin/lessons/index', {title: 'All lessons', courses: results})
+              })  
+         })
+         
           router.get('/new', (req, res) => {
             res.render('course/create', {title: 'Create a course'})
            })
@@ -71,17 +82,59 @@ router.route("/fetchcourses").get(courseController.index)
               })
           });
 
-          router.delete('/course/:id', async (req, res) => {
+          router.get('/course/:id', async (req, res) =>{
             let courseId = req.params.id
-            await Course.findByIdAndRemove(courseId)
-                .then(() => {
-                    res.json({ message: "course is deleted" })
+            await Course.findById(courseId).populate('lessons').exec(async function (err, results) {
+              if (err) { console.log(err); };
+              res.render('course/show', { title: 'Course '+ results.name, course: results, lessons: results.lessons });
+            })
+          })
+
+          router.get('/course/:id/edit', async (req, res) =>{
+            let courseId = req.params.id
+            await Course.findById(courseId).exec(async function (err, results) {
+              if (err) { console.log(err); };
+              res.render('course/edit', { title: 'Editing '+ results.name, course: results });
+            })
+          })
+          
+          router.put('/course/:id/edit', async (req, res) => {
+            let courseId = req.params.id
+            const course = await Course.findById(courseId)
+            course.name = req.body.name;
+            course.isActive = req.body.activation;
+            try {
+              const result = await course.save();
+              console.log(result); // result
+              res.status(200).json({message: "success"});
+            } catch (err) {
+              console.error("something goes wrong");
+              res.json({ error: error })
+            }
+              res.redirect('/')
+          })
+
+          router.delete('/course/:id', async (req, res) => {
+            let courseId = req.params.id;
+            await Course.findByIdAndDelete(courseId)
+                .then(async course => {
+                  if(course.lessons.length){
+                    for (const lesson of course.lessons) {
+                      await lessons.findByIdAndDelete(lesson._id)
+                      .then(async lesson => {
+                        if(lesson.quizzes.length){
+                          for (const quiz of lesson.quizzes) {
+                            await Quiz.findByIdAndDelete(quiz._id)
+                          }
+                        }
+                      })
+                    }
+                  }
                 })
                 .catch(error => {
                     res.json({ error: error })
                 })
-              res.redirect('/')
-          })
+         });
 
     function check_user(header){
       let token = header.cookies.Authorization;
