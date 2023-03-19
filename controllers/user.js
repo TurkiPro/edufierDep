@@ -43,27 +43,90 @@ exports.login = async (req, res, next) => {
         const user = await service.findOne(userModel, filter);
 
         if (!user) {
-            throw new Error.BadRequest("Email or Password is wrong, please chech your enteries.");
+            throw new Error.BadRequest("Email or Password is wrong, please check your enteries.");
         }
 
         // login via password
             const result = await bcrypt.compare(req.body.password, user.password);
             if (!result) {
-                throw new Error.Unauthorized("Email or Password is wrong, please chech your enteries.");
+                throw new Error.Unauthorized("Email or Password is wrong, please check your enteries.");
             }
 
         let token = jwt.sign({ _id: user._id, roles: user.roles }, process.env.ACCESS_SECRET_TOKEN, {
             expiresIn: "24h",
         });
-
         return res.cookie('Authorization', 'Bearer ' + token, {
             httpOnly: true,
             sameSite: "strict",
             expires: new Date(Date.now() + 24 * 3600000
             ) // cookie will be removed after 24 hours
-        }).status(200).json({message: 'success'}).redirect("/");
+        }).status(200).json({message: 'success'});
 
     } catch (err) {
         next(err);
     }
 };
+
+
+exports.showEditProfile = async (req, res, next) => {
+    try {
+        userId = check_user(req)
+        const user = await userModel.findById(userId)
+        res.render('profile/edit', {title: 'Edit your information', user: user})
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.updateEditProfile = async (req, res, next) => {
+    try {
+        let filter = {};
+        userId = check_user(req)
+        const user = await userModel.findById(userId)
+
+        filter["email"] = req.body.email.trim().toLowerCase()
+
+        if (!user) {
+            throw new Error.BadRequest("Email or Password is wrong, please check your enteries.");
+        }
+
+        // login via password
+            const result = await bcrypt.compare(req.body.password, user.password);
+            if (!result) {
+                throw new Error.Unauthorized("Email or Password is wrong, please check your enteries.");
+            }
+
+        let token = jwt.sign({ _id: user._id, roles: user.roles }, process.env.ACCESS_SECRET_TOKEN, {
+            expiresIn: "24h",
+        });
+        return res.cookie('Authorization', 'Bearer ' + token, {
+            httpOnly: true,
+            sameSite: "strict",
+            expires: new Date(Date.now() + 24 * 3600000
+            ) // cookie will be removed after 24 hours
+        }).status(200).json({message: 'success'});
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+function check_user(header){
+    let token = header.cookies.Authorization;
+    if (!token) {
+        return responseHandler(null, res, 'Server Error', 500);
+    }
+    try {
+        if (token.includes("Bearer")) {
+            token = token.substr(7);
+        }
+        //if can verify the token, set req.user and pass to next middleware
+        const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
+        const user = decoded._id;
+        return user;
+    } catch (ex) {
+        console.log(ex + 'test')
+        return null;
+    }
+}

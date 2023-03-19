@@ -17,7 +17,7 @@ module.exports.verifyToken = function (req, res, next) {
         //if can verify the token, set req.user and pass to next middleware
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
         req.user = decoded;
-        next();
+        return next()
     } catch (ex) {
         console.log(ex + 'verify token')
         responseHandler(null, res, "Unauthorized", 401);
@@ -30,7 +30,11 @@ module.exports.verifyAuth = function (req, res, next) {
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
     //if no token found, return response (without going to the next middelware)
     if (!token) {
-       return next();
+        if(req.path.includes("signup")){
+            return res.render('signup',{title: 'Sign Up'})
+        }else{
+            return res.render('login',{title: 'Login'})
+    }
     }
     try {
         if (token.includes("Bearer")) {
@@ -39,7 +43,7 @@ module.exports.verifyAuth = function (req, res, next) {
         //if can verify the token, set req.user and pass to next middleware
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
         req.user = decoded;
-        return res.redirect('/dashboard')
+        return res.render('dashboard',{title: 'Dashboard'})
     } catch (ex) {
         console.log(ex + 'verifyauth')
         responseHandler(null, res, "Unauthorized", 401);

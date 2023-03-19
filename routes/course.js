@@ -5,6 +5,7 @@ const Course = require("../models/courses");
 const courseController = require("../controllers/api/course");
 const lessons = require("../models/lessons");
 const Quiz = require("../models/quizzes");
+const admin = require("../middleware/admin");
 const router = express.Router();       
 
 router.route("/fetchcourses").get(courseController.index)
@@ -44,7 +45,7 @@ router.route("/fetchcourses").get(courseController.index)
         //           res.render('course/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername });
         //         })
         //     })
-        router.get('/course/:id/lessons/', async (req, res) => {
+        router.get('/course/:id/lessons/',admin.verifyAdministration, async (req, res) => {
           const courseId = req.params.id;
           await Course.findById(courseId)                    
               .populate('lessons')
@@ -54,11 +55,11 @@ router.route("/fetchcourses").get(courseController.index)
               })  
          })
          
-          router.get('/new', (req, res) => {
+          router.get('/new',admin.verifyAdministration, (req, res) => {
             res.render('course/create', {title: 'Create a course'})
            })
    
-          router.post('/new', (req, res) => {
+          router.post('/new',admin.verifyAdministration, (req, res) => {
             // find the user
             const user = check_user(req);
             if(user === null){
@@ -74,7 +75,7 @@ router.route("/fetchcourses").get(courseController.index)
              })
             })
    
-          router.get('/', (req, res) => {
+          router.get('/', admin.verifyAdministration, (req, res) => {
              Course.find()
                 .exec(function(err, results) {
                  if(err) {console.log(err)}
@@ -90,7 +91,7 @@ router.route("/fetchcourses").get(courseController.index)
             })
           })
 
-          router.get('/course/:id/edit', async (req, res) =>{
+          router.get('/course/:id/edit', admin.verifyAdministration, async (req, res) =>{
             let courseId = req.params.id
             await Course.findById(courseId).exec(async function (err, results) {
               if (err) { console.log(err); };
@@ -98,7 +99,7 @@ router.route("/fetchcourses").get(courseController.index)
             })
           })
           
-          router.put('/course/:id/edit', async (req, res) => {
+          router.put('/course/:id/edit',admin.verifyAdministration, async (req, res) => {
             let courseId = req.params.id
             const course = await Course.findById(courseId)
             course.name = req.body.name;
@@ -114,7 +115,7 @@ router.route("/fetchcourses").get(courseController.index)
               res.redirect('/')
           })
 
-          router.delete('/course/:id', async (req, res) => {
+          router.delete('/course/:id',admin.verifyAdministration, async (req, res) => {
             let courseId = req.params.id;
             await Course.findByIdAndDelete(courseId)
                 .then(async course => {

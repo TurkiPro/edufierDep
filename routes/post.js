@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const Comment = require('../models/comments');
 const User = require('../models/users');
 const Post = require('../models/posts');
+const admin = require("../middleware/admin");
 const router = express.Router();       
 
       // get user name from db
@@ -41,11 +42,11 @@ const router = express.Router();
                 })
             })
    
-          router.get('/new', (req, res) => {
+          router.get('/new',admin.verifyAdministration, (req, res) => {
             res.render('post/create', {title: 'Create a discussion'})
            })
    
-          router.post('/new', (req, res) => {
+          router.post('/new',admin.verifyAdministration, (req, res) => {
             // find the user
             const user = check_user(req);
             if(user === null){
@@ -73,7 +74,6 @@ const router = express.Router();
 
     function check_user(header){
       let token = header.cookies.Authorization;
-      console.log(token)
       if (!token) {
           return responseHandler(null, res, 'Server Error', 500);
       }

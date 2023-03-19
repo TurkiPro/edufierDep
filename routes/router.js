@@ -4,7 +4,7 @@ const { useErrorHandler } = require("../middleware/error-handler");
 
 
 const authAPI = require("./api/auth");
-// const users = require("./user");
+const user = require("./user");
 const auth = require("./auth");
 const admin = require('./admin');
 const post = require("./post");
@@ -20,6 +20,7 @@ module.exports.default = (app) => {
     app.use(cookieParser());
 
     app.use("/", auth);
+    app.use("/profile", user);
     app.use("/control", admin);
     // app.use("/api/v1/users", users);
     app.use("/posts", post);

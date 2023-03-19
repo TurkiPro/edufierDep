@@ -6,6 +6,7 @@ body{
     background-color: #5830C4;
 }
 
+
 .sign-in{
     font-family: 'Montserrat', sans-serif;
     background-color: white;
@@ -89,10 +90,13 @@ body{
     color: #5830C4;
     transition: 0.6s;
 }
-
+.navbar-toggler{
+    margin-left: 90% !important;
+}
 .logout{
     text-align: center;
     margin-top: 55vh;
+    
 }
 
 .logout a {
@@ -111,10 +115,9 @@ body{
     color: white;
 }
 
-.dash_info {
-    max-width: 100%;
-    height: auto;
-}
+/* body .row .col-sm .container {
+    max-width: auto;
+} */
 
 .dash_info .col-12 div{
     min-height: 48%;
@@ -144,30 +147,83 @@ body{
 
 
 #user_name{
+    position: relative;
     width: 90%;
     background-color: #D33630;
     color: white;
 }
-
+#user_img{
+    position: absolute;
+    width: 13vh;
+    height: 10vh;
+    right: 1vh;
+    align-self: center;
+}
+#alert-icon{
+    color: white;
+    width: 8vh;
+    height:8vh ;
+    align-self: baseline;
+    
+}
 #user_lvl{
+    position: relative;
     width: 90%;
     background-color: #12C4B2;
     color: white;
 }
+#user_lvl_img{
+    position: absolute;
+    width: 13vh;
+    height: 11vh;
+    right: 1vh;
+    align-self: center;
+}
 
 #recent_course{
+    position: relative;
     width: 90%;
-    background: linear-gradient(169.73deg, rgba(204, 62, 10, 0.23) -132.03%, #DF7377 -58.87%);
+    background: linear-gradient(169.73deg, rgba(204, 62, 7, 0.23) -132.03%, #DF7377 -58.87%);
     background-attachment: fixed; 
     color: white;
+    
+}
+#recent_course-h3{
+    position: absolute;
+    color: white;
+    left: 22vh;
+    top: 10vh;
+    opacity: 0.7;
 }
 #community{
+    position: relative;
     width: 90%;
     background: linear-gradient(182.25deg, #AEE1FD -85.84%, #388DF2 67%, #43A6DD 97.45%, #8DB9FD 156.04%, #C1CDE3 259.18%, #D99DCF 259.18%);
     background-attachment: fixed; 
     color: white;
+  
 }
+#community-svg{
+    /* image 24 */
 
+    position: absolute;
+    width: 13vh;
+    height: 11vh;
+    right: 1vh;
+    top: 3vh;
+    
+
+    background: url(image.png);
+
+}
+#bonus{
+    position: relative;
+}
+#coin-img{
+    align-self: center;
+    width: 12vh;
+    height: 12vh;
+}
 .courses_container .col-12 div{
     min-width: 100%;
     min-height: 100%;
@@ -319,10 +375,35 @@ body{
 }
 
 .youtube-video {
+    position: relative;
     aspect-ratio: 16 / 9;
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
   }
-
+  /* Edited*/
+.btn-div{
+    justify-content: space-around;
+    margin-left: 20%;
+    margin-top: 5px;
+}
+#btn-previous{
+    height: 50px;
+    width: 200px;
+    border-radius: 19px;
+    background-color: #6D7D93;
+    border-color: #6D7D93;
+    color: white;
+   
+}
+#btn-next{
+    height: 50px;
+    width: 200px;
+    border-radius: 19px;
+    background-color: #5A0FC8;
+    border-color: #5A0FC8;
+    color: white;
+    float: right;
+}
 
   /* cycle */
 
@@ -405,3 +486,4 @@ body{
     font-size: 2rem;
     transition: trasform 2.25s;
   }
+ 

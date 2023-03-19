@@ -7,7 +7,7 @@ module.exports.verifyAdministration = function (req, res, next) {
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
     //if no token found, return response (without going to the next middelware)
     if (!token) {
-        next();
+        return responseHandler(null, res, "Unauthorized", 401);
     }
     try {
         if (token.includes("Bearer")) {
