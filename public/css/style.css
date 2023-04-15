@@ -67,6 +67,19 @@ body{
 .dashboard_bg{
     font-family: 'Montserrat', sans-serif;
     border-radius: 0 20px 20px 0;
+    position: fixed;
+    height: 100vh;
+}
+.navbar{
+    
+}
+
+nav, #navbarSupportedContent{
+    height: 90%;
+}
+
+nav .d-flex , .nav{
+    height: 100%;
 }
 
 .nav-link{
@@ -78,6 +91,13 @@ body{
 
 .nav-item{
     width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+.adjuster{
+    width: calc(100vw - 85vw);
+    text-align: left;
 }
 
 
@@ -95,7 +115,7 @@ body{
 }
 .logout{
     text-align: center;
-    margin-top: 55vh;
+    margin-top: auto;
     
 }
 
@@ -244,9 +264,10 @@ body{
         margin-top: auto;
     }
     .dashboard_bg{
-
+        position: sticky;
         border-radius: 0;
-    
+        height: auto;
+        top: 0;
     }
     .nav-item{
         width: auto;
@@ -487,3 +508,69 @@ body{
     transition: trasform 2.25s;
   }
  
+
+/* Cards lesson*/
+
+
+#cards-container{
+    overflow-x: scroll;
+    align-items: end;
+    min-height: 70vh;
+    min-width: 100%;
+
+}
+
+#cards-container .col{
+    background-color: white;
+    border-radius: 25px;
+    min-height: 50vh;
+    min-width: 40vh;
+    margin: 1vh;
+}
+
+.lessons_container > #cards-container{
+    background-color: unset;
+    max-width: 100vh;
+    
+}
+
+.lessons_container > #cards-container{
+    background-color: unset;
+    max-width: 100vh;
+}
+
+.container > #cards-container{
+    max-width: 100vh;
+}
+
+#cards-container .col:hover{
+    background-color: white;
+    border-radius: 25px;
+    min-height: 70vh;
+    margin: 0vh 1vh 0vh 1vh;
+}
+
+.active_card{
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+}
+
+/* interactive image */
+
+.image_container {
+    width: max-content;
+    position: relative;
+    cursor: "crosshair";
+}
+
+#dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: red;
+    transform: translate(100, 0);
+}

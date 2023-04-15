@@ -4,23 +4,49 @@
         <div class="row">
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
-                <div class="container">
-                    <form action="/profile/edit" method="PUT" class="form-signin">
+                <div class="container mt-3">
+                    <form action="/profile/edit" method="PUT" class="form-signin" enctype="multipart/form-data">
+                        <div class="">
+                            <% if(user.userProfile !== undefined){ if (user.userProfile.profileImage !== undefined){ %>
+                                <img src="/uploads/<%= user.userProfile.profileImage %>" alt=""> 
+                            <% }} %>
+                        </div>
+                        
+                        <div class="error" style="background-color: red;"></div>
+                        <div class="form-group">
+                            <input type="file" id="myFile" name="profilePic">
+                        </div>
                         <div class="form-group">
                           <label for="name">Name</label>
                           <input type="text" class="form-control" name="name" placeholder="Enter name" value="<%= user.name %>">
                         </div>
                         <div class="form-group">
-                            <label for="name">Phone number</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter phone number" value="<%= user.phone %>">
+                            <label for="phone">Phone number</label>
+                            <input type="text" class="form-control" name="phone" placeholder="Enter phone number" value="<%= user.phone %>">
                           </div>
                           <div class="form-group">
-                            <label for="name">Email</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter email" value="<%= user.email %>">
+                            <label for="email">Current Email</label>
+                            <input type="text" class="form-control" name="email" placeholder="Enter current email" value="<%= user.email %>">
                           </div>
                           <div class="form-group">
-                            <label for="name">Password</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter new password">
+                            <label for="email">New Email</label>
+                            <input type="text" class="form-control" name="newEmail" placeholder="Enter new email">
+                          </div>
+                          <div class="form-group">
+                            <label for="password">Current Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter current password">
+                          </div>
+                          <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input type="password" class="form-control" name="newPassword" placeholder="Enter new password">
+                          </div>
+                          <div class="form-group">
+                            <label for="password">Confirm New Password</label>
+                            <input type="password" class="form-control" name="cNewPassword" placeholder="confirm your new password">
+                          </div>
+                          <div class="form-group">
+                            <label for="bday">Birth date</label>
+                            <input type="date" class="form-control" id="bday" name="birthDay" value="<%= bday %>">
                           </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </form>
@@ -34,24 +60,26 @@
         
         window.onload=function() {
         const eform = document.querySelector('form');
+        const display = document.querySelector('.error')
         eform.addEventListener('submit', async event =>{
             event.preventDefault();
 
             const formData = new FormData(eform);
-            const data = Object.fromEntries(formData);
+            // const data = Object.fromEntries(formData);
+            display.textContent = ''
             try{
                 const res = await fetch('/profile/edit', {
                     method: 'PUT',
                     credentials: "include",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                    body: formData
 
                 })
                 const resData = await res.json()
+                if (res.status === 400 || res.status === 401) {
+                    return display.textContent = `${resData.message}. ${resData.error ? resData.error : ''}`
+                }
                 console.log(resData)
-                location.reload();
+                location.reload()
             } catch (err) {
                 console.log(err.message)
             }

@@ -7,6 +7,22 @@ const Quiz = require("../models/quizzes");
 const admin = require("../middleware/admin");
 const router = express.Router();       
 
+const multer = require("multer");
+
+const fileFilterMiddleware = (req, file, cb) => {
+    const fileSize = parseInt(req.headers["content-length"])
+    console.log(file)
+    if ((file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/gif") && fileSize <= 1282810) {
+        cb(null, true)
+    } else if(file.mimetype === "audio/mpeg" && fileSize <= 2282810){
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileFilterMiddleware});
+
 
       // get user name from db
         // fetchName = id => {
@@ -25,21 +41,30 @@ const router = express.Router();
             res.render('lesson/create', {title: 'Create a lesson', courseId: req.params.id})
            })
         // Create and Post lessons
-        router.post('/course/:id/lesson/new',admin.verifyAdministration, async (req, res) => {
+        router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), admin.verifyAdministration, async (req, res) => {
             // find out which course you are adding a lesson to
+            let lesson;
                 const id = req.params.id;
             // find the user
                 const user = check_user(req);
                 if(user === null){
                     res.redirect('/')
                 }
+            if(req.body.lessonType == 4){
             // get the lesson info and record course id
-                const lesson = new Lesson({
-                name: req.body.name,
-                typeOfLesson: req.body.lessonType,
-                data: [req.body.information],
-                course: id
-            })
+            console.log(req.body.yPos);
+                lesson = new Lesson({
+                    name: req.body.name,
+                    typeOfLesson: req.body.lessonType,
+                    data: [req.files['interImg'][0].filename,req.files['interAud'][0].filename,req.body.information,req.body.xPos, req.body.yPos],
+                    course: id
+            })}else{
+                lesson = new Lesson({
+                    name: req.body.name,
+                    typeOfLesson: req.body.lessonType,
+                    data: [req.body.information],
+                    course: id
+            })}
             // save lesson
             await lesson.save();
             // get this particular course

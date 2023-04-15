@@ -5,7 +5,7 @@
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
                 <div class="container">
-                    <form action="/lessons/course/<%= courseId %>/lesson/new" method="post" class="form-signin creation">
+                    <form action="/lessons/course/<%= courseId %>/lesson/new" method="post" class="form-signin creation" enctype="multipart/form-data">
                         <div class="form-group">
                           <label for="name">Name of the lesson</label>
                           <input type="text" class="form-control" name="name" placeholder="Enter name">
@@ -15,6 +15,8 @@
                             <br>
                             <input name="lessonType" type="radio" value="1" onclick="youtube()" /> Video
                             <input name="lessonType" type="radio" value="2" onclick="circles()" /> Circles
+                            <input name="lessonType" type="radio" value="3" onclick="cards()" /> Cards
+                            <input name="lessonType" type="radio" value="4" onclick="interactiveImage()" /> interactive Image
                             <br>
                             <div id="data-input">
 
@@ -39,6 +41,66 @@
             document.getElementById('data-input').innerHTML = ''
             document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter main title"> <input type="text" class="form-control" name="information" placeholder="Enter main information"><input type="text" class="form-control" name="information" placeholder="Enter main title"> <input type="text" class="form-control" name="information" placeholder="Enter main information">';
         }
+        function cards(){
+            document.getElementById('data-input').innerHTML = ''
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter main title"> <input type="text" class="form-control" name="information" placeholder="Enter main information"><input type="text" class="form-control" name="information" placeholder="Enter main title"> <input type="text" class="form-control" name="information" placeholder="Enter main information">';
+        }
+        function interactiveImage(){
+            document.getElementById('data-input').innerHTML = ''
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter main title"><input type="hidden" class="form-control" id="xPos" name="xPos" hidden><input type="hidden" class="form-control" id="yPos" name="yPos"><div class="form-group"><label for="interAud">Upload the audio file:</label><input type="file" name="interAud" accept=".mp3"><br><label for="interImg">Upload the image file:</label><input type="file" id="myFile" onchange="preview()" name="interImg" accept=".png, .jpg, .jpeg"><h5>Image preview and selection:</h5><div class="image_container"><img id="frame" src="" width="100px" width="200px"/><span id="dot" /></div></div>';
+        }
     </script>
+    <script>
+        function preview() {
+            frame.src=URL.createObjectURL(event.target.files[0]);
+            let container = document.querySelector('#frame');
+            let dot = document.getElementById('dot');
+            let xReturn = document.getElementById('xPos')
+            let yReturn = document.getElementById('yPos')
+            
+            document.addEventListener('click', function( e ) {
+            if (container === event.target && container.contains(e. target)) {
+            var parentPosition = getPosition(container);
+                var xPosition = e.clientX - parentPosition.x - (dot.clientWidth / 2);
+                var yPosition = e.clientY - parentPosition.y - (dot.clientHeight / 2);
+                
+                dot.style.left = xPosition + "px";
+                dot.style.top = yPosition + "px";
+                xReturn.value = xPosition;
+                yReturn.value = yPosition;
+                console.log(xReturn.value);
+                console.log(yReturn.value);
+        }
+        });
+        }
+    </script>
+    <script>        
+        // Helper function to get an element's exact position
+        function getPosition(el) {
+          var xPos = 0;
+          var yPos = 0;
+         
+          while (el) {
+            if (el.tagName == "BODY") {
+              // deal with browser quirks with body/window/document and page scroll
+              var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+              var yScroll = el.scrollTop || document.documentElement.scrollTop;
+         
+              xPos += (el.offsetLeft - xScroll + el.clientLeft);
+              yPos += (el.offsetTop - yScroll + el.clientTop);
+            } else {
+              // for all other non-BODY elements
+              xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+              yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+            }
+         
+            el = el.offsetParent;
+          }
+          return {
+            x: xPos,
+            y: yPos
+          };
+        }
+        </script>
 </body>
 </html>

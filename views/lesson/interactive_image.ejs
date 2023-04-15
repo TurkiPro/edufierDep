@@ -1,0 +1,58 @@
+
+<div class="d-flex flex-row flex-nowrap">
+    <div class="col">
+      <audio controls>
+        <source src="/uploads/courses/lessons/<%= information.data[1] %>" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio> 
+        <div class="image_container">
+            <img id="inter_img" width="50%" alt="" src="/uploads/courses/lessons/<%= information.data[0] %>" />
+            <span id="dot" />
+        </div>
+    </div>
+</div>
+
+<script>
+let container  = document.querySelector('#inter_img');
+let dot = document.getElementById('dot');
+
+document. addEventListener('click', function( e ) {
+if (container === event.target && container.contains(e. target)) {
+  console.log('here1')
+  var parentPosition = getPosition(container);
+    var xPosition = e.clientX - parentPosition.x - (dot.clientWidth / 2);
+    var yPosition = e.clientY - parentPosition.y - (dot.clientHeight / 2);
+     
+    dot.style.left = xPosition + "px";
+    dot.style.top = yPosition + "px";
+}
+});
+
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+ 
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+ 
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+ 
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+</script>

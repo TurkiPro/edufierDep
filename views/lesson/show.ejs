@@ -9,6 +9,10 @@
                         <%- include('video.ejs') -%>
                     <%} else if (information.typeOfLesson === 2) { %>
                         <%- include('circles.ejs') -%>
+                    <%} else if (information.typeOfLesson === 3) { %>
+                        <%- include('cards.ejs') -%>
+                    <%} else if (information.typeOfLesson === 4) { %>
+                        <%- include('interactive_image.ejs') -%>
                     <%} else  { %>
                     <p> Other type </p>
                     <% } %>
