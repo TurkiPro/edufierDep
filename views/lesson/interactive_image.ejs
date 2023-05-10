@@ -22,9 +22,17 @@ if (container === event.target && container.contains(e. target)) {
   var parentPosition = getPosition(container);
     var xPosition = e.clientX - parentPosition.x - (dot.clientWidth / 2);
     var yPosition = e.clientY - parentPosition.y - (dot.clientHeight / 2);
-     
+    const correctX = parseInt(<%- information.data[3] %>);
+    const correctY = parseInt(<%- information.data[4] %>);
+
     dot.style.left = xPosition + "px";
     dot.style.top = yPosition + "px";
+
+    if(((correctX - 10) <= xPosition && xPosition <= (correctX + 10)) && ((correctY - 10) <= yPosition && yPosition <= (correctY + 10))){
+      alert("Correct!")
+    }
+
+
 }
 });
 

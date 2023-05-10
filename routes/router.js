@@ -32,8 +32,9 @@ module.exports.default = (app) => {
         res.render('course/gamefier')
     });
 
+    // if route not available give a 404 error page
     app.get('*', function(req, res){
-        res.status(404).send('Error 404, Not found');
+        res.status(404).render('error.ejs');
       });
     app.use(useErrorHandler);
 };

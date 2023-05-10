@@ -13,6 +13,13 @@ typeOfLesson: {
    data:{
       type: Array
    },
+   givePoints:{
+      type: Boolean,
+      required: true
+   },
+   pointsArray: {
+         type: Array
+   },
 date: {
       type: Date,
       default: Date.now

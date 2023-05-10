@@ -18,6 +18,13 @@ const quizSchema = new mongoose.Schema({
       trim: true,
       required: true
    },
+   givePoints:{
+      type: Boolean,
+      required: true
+   },
+   pointsArray: {
+         type: Array
+   },
 date: {
       type: Date,
       default: Date.now
@@ -27,6 +34,9 @@ lesson: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Lesson'
    }
- })
+ }, {
+   strictQuery: true
+ }
+ )
 
 module.exports = mongoose.model('Quiz', quizSchema);

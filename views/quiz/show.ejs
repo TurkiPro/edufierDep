@@ -5,10 +5,10 @@
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
                 <div class="container lessons_container">
-                    <% if (information.typeOfLesson === 1) { %>
-                        <%- include('video.ejs') -%>
-                    <%} else if (information.typeOfLesson === 2) { %>
-                        <%- include('circles.ejs') -%>
+                    <% if (information.typeOfQuiz === 1) { %>
+                        <!-- <%- include('mcq.ejs') -%> -->
+                    <%} else if (information.typeOfQuiz === 2) { %>
+                        <%- include('tnf.ejs') -%>
                     <%} else  { %>
                     <p> Other type </p>
                     <% } %>

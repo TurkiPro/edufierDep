@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
 
 const pointsSchema = new mongoose.Schema({
-    Amount: {
-        type: int,
+    amount: {
+        type: Number,
         required: true
     },
-    ID: {
-        type: String,
-        required: true,
-        unique: true
+    userID: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'users' 
     },
-    userID: [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
-    ],
-
+    completionId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'completions' 
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 }, {
     strictQuery: true
   }

@@ -3,12 +3,13 @@ const Courses = require("../../models/courses");
 
 module.exports = {
     index: (req, res) => {
-        Courses.find({})
+        Courses.find({}).where('isActive').equals('true')
             .then(courses => {
+                console.log(courses)
                 res.json(courses)
             })
             .catch(errors => {
-                res.json({ error: error })
+                res.json({ error: errors })
             })
     },
     show: (req, res) => {

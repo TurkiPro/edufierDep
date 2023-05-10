@@ -19,6 +19,9 @@
                             <div id="data-input">
 
                             </div>
+                            <div id="points-data-input">
+
+                            </div>
                             <!-- <input name="lessonType" type="radio" value="2" /> False -->
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -37,7 +40,13 @@
         }
         function trueFalse(){
             document.getElementById('data-input').innerHTML = ''
-            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter quiz question"><label for="name">Choose the correct answer</label> <input name="answer" type="radio" value="true" />True <input name="answer" type="radio" value="false" />False';
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter quiz question"><label for="answer">Choose the correct answer</label> <input name="answer" type="radio" value="true" />True <input name="answer" type="radio" value="false" />False<br><label for="pointstf">Would like to give points?</label> <input name="pointsTF" type="radio" value="true" onclick="points()" />True <input name="pointstf" type="radio" value="false" />False';
+        }
+    </script>
+    <script>
+        function points(){
+            document.getElementById('points-data-input').innerHTML = ''
+            document.getElementById('points-data-input').innerHTML += '<input type="number" class="form-control" name="points" placeholder="Enter points earned of completing this quiz">';
         }
     </script>
 </body>

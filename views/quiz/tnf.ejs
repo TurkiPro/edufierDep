@@ -1,0 +1,47 @@
+
+<div class="d-flex justify-content-center align-items-center" id="circles_container">
+    <ul class="menu">
+        <% if (Array.isArray(information.data)) { %>
+            <form>
+                <div class="form-group">
+                        <div class="error" style="background-color: red;"></div>
+                        <div class="success" style="background-color: cadetblue;"></div>
+                        <label for=""><%- information.data[0] %></label>
+                        <br>
+                        <input type="radio" name="answer" id="answer" value="true">true
+                        <br>
+                        <input type="radio" name="answer" id="answer" value="false">false
+                        <br>
+                        <button type="submit">Submit</button>
+                </div>
+            </form>
+        <% } %>
+      </ul>
+</div>
+
+<script>
+    const form = document.querySelector('form')
+    const display = document.querySelector('.error')
+    const info = document.querySelector('.success')
+    form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    display.textContent = ''
+    const answer = document.querySelector("input[name='answer']:checked").value;
+    try {
+      const res = await fetch('/quizzes/quiz/<%= information.id %>/answer', {
+        method: 'POST',
+        body: JSON.stringify({ answer: answer }),
+        headers: { 'Content-Type': 'application/json' }
+        })
+      const data = await res.json()
+      if (res.status === 400 || res.status === 401) {
+        return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
+      }
+      console.log(data)
+    location.reload();
+    } catch (err) {
+        console.log(err.message)
+      }
+
+    })
+  </script>

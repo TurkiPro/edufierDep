@@ -4,7 +4,7 @@
         <div class="row">
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
-                <div class="container posts_container">
+                <div class="container list">
                     <% courses.forEach(function(course, i){ %>
                         <div class="row mt-3">
                             <div class="col-4">
@@ -13,16 +13,16 @@
                                     <h4><%= course.isActive %> </h4>
                                 </a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 bg-secondary text-white">
                                 <a href="/lessons/course/<%= course.id %>/lesson/new" target="_blank">add a lesson</a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 bg-secondary text-white">
                                 <a href="/courses/course/<%= course.id %>/lessons" target="_blank">all course lessons</a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 bg-info text-white">
                                 <a href="/courses/course/<%= course.id %>/edit" target="_blank">edit</a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 bg-danger text-white">
                                 <a onclick="deleteWindow(this)" data-id="<%= course.id %>">delete</a>
                             </div>
                         </div>

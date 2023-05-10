@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const Lesson = require("../models/lessons");
 const Quizz = require("../models/quizzes");
+const completion = require("../controllers/completion");
 const router = express.Router();       
 
 
@@ -22,12 +23,17 @@ const router = express.Router();
                 if(user === null){
                     res.redirect('/')
                 }
+            // make incoming string a boolean
+                const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
+                console.log(isTrueSet)
             // get the quizz info and record lesson id
                 const quizz = new Quizz({
                 name: req.body.name,
                 typeOfQuiz: req.body.quizType,
                 data: [req.body.information],
                 answer: req.body.answer,
+                givePoints: isTrueSet,
+                pointsArray: [req.body.points],
                 lesson: id
             })
             // save quizz
@@ -43,6 +49,25 @@ const router = express.Router();
             })
 
         })
+
+        router.post('/quiz/:id/answer', async (req, res) =>{
+            let quizzId = req.params.id;
+            await Quizz.findById(quizzId)
+                .then(quizz=>{
+                    if(quizz.answer == req.body.answer){
+                        const user = check_user(req);
+                        if(user === null){
+                            res.redirect('/')
+                        }
+                        completion.addCompletion('quizz',quizzId,user)
+                    }else{
+                        console.log('wrong')
+                    }
+                }).catch(error =>{
+                    console.log('hi')
+                    res.json({ error: error })
+                })
+        });
 
         router.get('/quiz/:id', async (req, res) => {
             let quizzId = req.params.id;
