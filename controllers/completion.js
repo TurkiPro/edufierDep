@@ -1,16 +1,15 @@
 const Error = require("../middleware/error-handler");
 const { responseHandler } = require("../middleware/response-handler.js");
 const User = require("../models/users");
-const Point = require("../models/points");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const service = require("../service/mongo.service");
 const Completions = require("../models/completions");
 const userRecords = require("../models/userRecords");
+const point = require("../controllers/point");
 
-
-const addCompletion = (actType, actId, user) => {
-    Completions.exists( {activityID: actId} ,async (error, result)=>{
+const addCompletion = async (actType, actId, user, points) => {
+    const checkCompeltion = Completions.exists( {activityID: actId} ,async (error, result)=>{
         if (error){
           console.log(error)
           return false;
@@ -26,12 +25,20 @@ const addCompletion = (actType, actId, user) => {
             console.log(user_record)
             const completion = await Completions.findById(result._id);
             await completion.completedUsers.push(user_record._id);
-            await completion.save(function(err) {
-              if(err) {console.log(err)}
+            const check = await completion.save(async function(err) {
+              if(err) {
+                console.log(err)
+                return false;
+              }
               console.log('happy1'+completion)
+              await point.assignPoints(points, completion._id, user)
+              return true;
               })
-                
-            return true;
+              if(check == false){
+                return false;
+              }else{
+                return true
+              }
           }
           else{
             const completion = new Completions({
@@ -47,14 +54,24 @@ const addCompletion = (actType, actId, user) => {
             console.log('here2'+completion)
             console.log(user_record)
             completion.completedUsers.push(user_record._id)
-            await completion.save(function(err) {
-              if(err) {console.log(err)}
+            await completion.save(async function(err) {
+              if(err) {
+                console.log(err)
+                return false;
+              }
                 console.log('happy2')
+                await point.assignPoints(points, completion._id, user)
+                return true;
               })
-            return true;
           }
         }
       });
+      if(checkCompeltion == false){
+        return false;
+      }else{
+        console.log('here:)')
+        return true
+      }
 }
 
 module.exports ={

@@ -53,19 +53,26 @@ const router = express.Router();
         router.post('/quiz/:id/answer', async (req, res) =>{
             let quizzId = req.params.id;
             await Quizz.findById(quizzId)
-                .then(quizz=>{
+                .then(async quizz=>{
                     if(quizz.answer == req.body.answer){
                         const user = check_user(req);
                         if(user === null){
                             res.redirect('/')
                         }
-                        completion.addCompletion('quizz',quizzId,user)
+                        await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray[0]).then(result =>{
+                            if(result == true){
+                                console.log('done')
+                                res.json({ message: 'Good job!' })
+                            }
+                        })
+                        console.log('debg')
                     }else{
                         console.log('wrong')
+                        res.json({ message: 'wrong answer' })
                     }
                 }).catch(error =>{
                     console.log('hi')
-                    res.json({ error: error })
+                    res.status(400).json({ error: error })
                 })
         });
 
