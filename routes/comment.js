@@ -2,10 +2,11 @@ const express = require("express");
 const jwt = require('jsonwebtoken');
 const Post = require('../models/posts');
 const Comment = require('../models/comments');
+const auth = require("../middleware/auth")
 const router = express.Router();       
        
 // Create and Post comments
-    router.post('/comment/:id/new', async (req, res) => {
+    router.post('/comment/:id/new', auth.verifyAuth, async (req, res) => {
         // find out which post you are commenting
             const id = req.params.id;
         // find the user

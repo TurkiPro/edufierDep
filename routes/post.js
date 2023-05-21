@@ -4,6 +4,7 @@ const Comment = require('../models/comments');
 const User = require('../models/users');
 const Post = require('../models/posts');
 const admin = require("../middleware/admin");
+const auth = require("../middleware/auth")
 const router = express.Router();       
 
       // get user name from db
@@ -12,7 +13,7 @@ const router = express.Router();
         };
 
         //  Get each post details. 
-        router.get('/post/:id', async (req, res) => {
+        router.get('/post/:id', auth.verifyAuth, async (req, res) => {
             let userName;
             let postUsername;
             let userComments = [];
@@ -38,15 +39,15 @@ const router = express.Router();
                     });
                     userComments.push(comment);
                   };
-                  res.render('post/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername });
+                  res.render('post/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername , user: req.userType });
                 })
             })
    
-          router.get('/new',admin.verifyAdministration, (req, res) => {
-            res.render('post/create', {title: 'Create a discussion'})
+          router.get('/new',auth.verifyAuth, (req, res) => {
+            res.render('post/create', {title: 'Create a discussion', user: req.userType})
            })
    
-          router.post('/new',admin.verifyAdministration, (req, res) => {
+          router.post('/new',auth.verifyAuth, (req, res) => {
             // find the user
             const user = check_user(req);
             if(user === null){
@@ -63,11 +64,11 @@ const router = express.Router();
              })
             })
    
-          router.get('/', (req, res) => {
+          router.get('/', auth.verifyAuth, (req, res) => {
              Post.find()
                 .exec(function(err, results) {
                  if(err) {console.log(err)}
-                 res.render('post/index', {title: 'All Posts', posts: results})
+                 res.render('post/index', {title: 'All Posts', posts: results, user: req.userType})
               })
           });
 

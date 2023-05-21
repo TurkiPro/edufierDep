@@ -10,14 +10,17 @@ const userRecordsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'users' 
     },
-    date: {
-        type: Date,
-        default: Date.now
+    numberOfTires: {
+        type: Number,
+        default: 1
     }
-
-}, {
-    strictQuery: true
-  }
+},
+    {
+        timestamps: true
+    }, 
+    {
+        strictQuery: true
+    }
 );
 
 

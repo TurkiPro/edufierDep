@@ -5,6 +5,8 @@ const Course = require("../models/courses");
 const Lesson = require("../models/lessons");
 const Quiz = require("../models/quizzes");
 const admin = require("../middleware/admin");
+const auth = require("../middleware/auth")
+const completion = require("../controllers/completion");
 const router = express.Router();       
 
 const multer = require("multer");
@@ -44,12 +46,17 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
         router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), admin.verifyAdministration, async (req, res) => {
             // find out which course you are adding a lesson to
             let lesson;
-                const id = req.params.id;
+            const id = req.params.id;
             // find the user
-                const user = check_user(req);
-                if(user === null){
-                    res.redirect('/')
-                }
+            const user = check_user(req);
+            if(user === null){
+                res.redirect('/')
+            }
+            const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
+            let points = [];
+            for (let index = 0; index < req.body.tries; index++) {
+                points[index] = req.body.points[index];
+            }
             if(req.body.lessonType == 4){
             // get the lesson info and record course id
             console.log(req.body.yPos);
@@ -57,12 +64,18 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                     name: req.body.name,
                     typeOfLesson: req.body.lessonType,
                     data: [req.files['interImg'][0].filename,req.files['interAud'][0].filename,req.body.information,req.body.xPos, req.body.yPos],
+                    givePoints: isTrueSet,
+                    maxTries: req.body.tries,
+                    pointsArray: points,
                     course: id
             })}else{
                 lesson = new Lesson({
                     name: req.body.name,
                     typeOfLesson: req.body.lessonType,
                     data: [req.body.information],
+                    givePoints: isTrueSet,
+                    maxTries: req.body.tries,
+                    pointsArray: points,
                     course: id
             })}
             // save lesson
@@ -79,7 +92,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
 
         })
 
-        router.get('/lesson/:id', async (req, res) => {
+        router.get('/lesson/:id',auth.verifyAuth, async (req, res) => {
             let lessonId = req.params.id;
             let checker = undefined;
             await Lesson.findById(lessonId)
@@ -93,9 +106,9 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                             }
                         }
                         if (lesson.quizzes.length){
-                            return res.render('lesson/show', {title: lesson.name, information: lesson, quiz: lesson.quizzes[0], nextLesson: checker})
+                            return res.render('lesson/show', {title: lesson.name, information: lesson, quiz: lesson.quizzes[0], nextLesson: checker, user: req.userType})
                         }
-                        return res.render('lesson/show', {title: lesson.name, information: lesson, quiz: undefined, nextLesson: checker})
+                        return res.render('lesson/show', {title: lesson.name, information: lesson, quiz: undefined, nextLesson: checker, user: req.userType})
                     }).catch(error => {
                         return res.json({ error: error })
                     })  
@@ -105,7 +118,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                 })
         });
 
-        router.get('/', (req, res) => {
+        router.get('/', admin.verifyAdministration, (req, res) => {
             Lesson.find()
                .exec(function(err, results) {
                 if(err) {console.log(err)}
@@ -113,10 +126,25 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
              })
          });
 
-        router.get('/lesson/:id/next', async (req, res) => {
+        router.get('/lesson/:id/next',auth.verifyAuth, async (req, res) => {
             let lessonId = req.params.id;
+            const user = check_user(req);
+            if(user === null){
+                res.redirect('/')
+            }
             await Lesson.findById(lessonId)
                 .then(async lesson => {
+                    await completion.addCompletion('lesson', lesson._id, user, lesson.pointsArray, lesson.maxTries, true).then(result =>{
+                        if(result == true){
+                            console.log('done correct lesson')
+                            // res.json({ message: 'Good job!' })
+                        }
+                    })
+                    .catch(error =>{
+                        console.log('hi')
+                        res.status(400).json({ error: error })
+                    })
+                    console.log('debg lesson')
                     await Course.findById(lesson.course).then(course =>{
                     //    let nextLesson = Course.aggregate([{
                     //     $match: { _id: course._id }
@@ -171,7 +199,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
         function check_user(header){
         let token = header.cookies.Authorization;
         if (!token) {
-            next();
+            return null
         }
         try {
             if (token.includes("Bearer")) {

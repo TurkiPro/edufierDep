@@ -4,6 +4,7 @@ const User = require('../models/users');
 const Lesson = require("../models/lessons");
 const Quizz = require("../models/quizzes");
 const completion = require("../controllers/completion");
+const auth = require("../middleware/auth")
 const router = express.Router();       
 
 
@@ -25,7 +26,10 @@ const router = express.Router();
                 }
             // make incoming string a boolean
                 const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
-                console.log(isTrueSet)
+                let points = [];
+                for (let index = 0; index < req.body.tries; index++) {
+                    points[index] = req.body.points[index];
+                }
             // get the quizz info and record lesson id
                 const quizz = new Quizz({
                 name: req.body.name,
@@ -33,7 +37,8 @@ const router = express.Router();
                 data: [req.body.information],
                 answer: req.body.answer,
                 givePoints: isTrueSet,
-                pointsArray: [req.body.points],
+                maxTries: req.body.tries,
+                pointsArray: points,
                 lesson: id
             })
             // save quizz
@@ -50,25 +55,37 @@ const router = express.Router();
 
         })
 
-        router.post('/quiz/:id/answer', async (req, res) =>{
+        router.post('/quiz/:id/answer', auth.verifyAuth, async (req, res) =>{
             let quizzId = req.params.id;
+            const user = check_user(req);
+            if(user === null){
+                res.redirect('/')
+            }
             await Quizz.findById(quizzId)
                 .then(async quizz=>{
                     if(quizz.answer == req.body.answer){
-                        const user = check_user(req);
-                        if(user === null){
-                            res.redirect('/')
-                        }
-                        await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray[0]).then(result =>{
+                        await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray, quizz.maxTries, true).then(result =>{
                             if(result == true){
-                                console.log('done')
+                                console.log('done correct')
                                 res.json({ message: 'Good job!' })
                             }
                         })
+                        .catch(error =>{
+                            console.log('hi')
+                            res.status(400).json({ error: error })
+                        })
                         console.log('debg')
                     }else{
-                        console.log('wrong')
-                        res.json({ message: 'wrong answer' })
+                        await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray, quizz.maxTries, false).then(result =>{
+                            if(result == true){
+                                console.log('done wrong')
+                                res.json({ message: 'wrong answer' })
+                            }
+                        })
+                        .catch(error =>{
+                            console.log(error)
+                            res.status(400).json({ error: error })
+                        })
                     }
                 }).catch(error =>{
                     console.log('hi')
@@ -76,11 +93,11 @@ const router = express.Router();
                 })
         });
 
-        router.get('/quiz/:id', async (req, res) => {
+        router.get('/quiz/:id', auth.verifyAuth, async (req, res) => {
             let quizzId = req.params.id;
             await Quizz.findById(quizzId)
                 .then(quizz => {
-                    res.render('quiz/show', {title: quizz.name, information: quizz})
+                    res.render('quiz/show', {title: quizz.name, information: quizz, user: req.userType})
                 })
                 .catch(error => {
                     res.json({ error: error })
@@ -95,7 +112,7 @@ const router = express.Router();
              })
          });
 
-        router.get('/quiz/:id/next', async (req, res) => {
+        router.get('/quiz/:id/next',auth.verifyAuth, async (req, res) => {
             let quizzId = req.params.id;
             await Quizz.findById(quizzId)
                 .then(async quizz => {
@@ -150,7 +167,7 @@ const router = express.Router();
         function check_user(header){
         let token = header.cookies.Authorization;
         if (!token) {
-            next();
+            return null;
         }
         try {
             if (token.includes("Bearer")) {

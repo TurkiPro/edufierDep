@@ -6,6 +6,7 @@ const courseController = require("../controllers/api/course");
 const lessons = require("../models/lessons");
 const Quiz = require("../models/quizzes");
 const admin = require("../middleware/admin");
+const auth = require("../middleware/auth")
 const router = express.Router();       
 
 router.route("/fetchcourses").get(courseController.index)
@@ -83,11 +84,11 @@ router.route("/fetchcourses").get(courseController.index)
               })
           });
 
-          router.get('/course/:id', async (req, res) =>{
+          router.get('/course/:id',auth.verifyAuth, async (req, res) =>{
             let courseId = req.params.id
             await Course.findById(courseId).populate('lessons').exec(async function (err, results) {
               if (err) { console.log(err); };
-              res.render('course/show', { title: 'Course '+ results.name, course: results, lessons: results.lessons });
+              res.render('course/show', { title: 'Course '+ results.name, course: results, lessons: results.lessons, user: req.userType });
             })
           })
 

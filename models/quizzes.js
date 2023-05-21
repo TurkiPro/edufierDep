@@ -20,7 +20,11 @@ const quizSchema = new mongoose.Schema({
    },
    givePoints:{
       type: Boolean,
-      required: true
+      default: false
+   },
+   maxTries: {
+      type: Number,
+      default: 1
    },
    pointsArray: {
          type: Array

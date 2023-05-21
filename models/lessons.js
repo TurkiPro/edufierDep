@@ -17,6 +17,10 @@ typeOfLesson: {
       type: Boolean,
       required: true
    },
+   maxTries: {
+      type: Number,
+      default: 1
+   },
    pointsArray: {
          type: Array
    },

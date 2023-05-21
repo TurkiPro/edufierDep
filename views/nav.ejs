@@ -75,7 +75,7 @@
                     Community
                 </a></div>
             </li>
-
+            <% if(user == 'admin'){ %>
             <li class="nav-item">
                 <div class="adjuster">
                 <a href="/control/dashboard" class="nav-link py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
@@ -86,7 +86,7 @@
                     Admin Dashboard (add auth later here)
                 </a></div>
             </li>
-
+            <% }; %>
             <div class="d-block logout">
                 <a href="/logout" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">

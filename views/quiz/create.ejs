@@ -19,6 +19,9 @@
                             <div id="data-input">
 
                             </div>
+                            <div id="tries-data-input">
+
+                            </div>
                             <div id="points-data-input">
 
                             </div>
@@ -40,14 +43,23 @@
         }
         function trueFalse(){
             document.getElementById('data-input').innerHTML = ''
-            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter quiz question"><label for="answer">Choose the correct answer</label> <input name="answer" type="radio" value="true" />True <input name="answer" type="radio" value="false" />False<br><label for="pointstf">Would like to give points?</label> <input name="pointsTF" type="radio" value="true" onclick="points()" />True <input name="pointstf" type="radio" value="false" />False';
+            document.getElementById('data-input').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter quiz question"><label for="answer">Choose the correct answer</label> <input name="answer" type="radio" value="true" />True <input name="answer" type="radio" value="false" />False<br><label for="pointstf">Would like to give points?</label> <input name="pointstf" type="radio" value="true" onclick="tries()" />True <input name="pointstf" type="radio" value="false" />False';
         }
     </script>
     <script>
-        function points(){
-            document.getElementById('points-data-input').innerHTML = ''
-            document.getElementById('points-data-input').innerHTML += '<input type="number" class="form-control" name="points" placeholder="Enter points earned of completing this quiz">';
+      function tries(){
+        document.getElementById('tries-data-input').innerHTML = ''
+        document.getElementById('tries-data-input').innerHTML += '<input type="number" class="form-control" name="tries" id="tries" placeholder="Enter the number of tries allowed for this quiz">';
+        let tiresEle = document.getElementById('tries')
+        tiresEle.addEventListener("change", points); 
+      }
+      function points(){
+        const tries = document.getElementById('tries').value;
+        document.getElementById('points-data-input').innerHTML = '';
+        for (let index = 0; index < tries; index++) {
+          document.getElementById('points-data-input').innerHTML += '<input type="number" class="form-control" name="points" placeholder="Enter points earned for the ('+(index+1)+') try">';
         }
+      }
     </script>
 </body>
 </html>

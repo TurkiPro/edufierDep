@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const { responseHandler } = require("./response-handler.js");
+const User = require('../models/users.js');
 
 module.exports.verifyToken = function (req, res, next) {
     //get the token from the header if present
@@ -24,7 +25,7 @@ module.exports.verifyToken = function (req, res, next) {
     }
 };
 
-module.exports.verifyAuth = function (req, res, next) {
+module.exports.verifyAuth = async function (req, res, next) {
     //get the token from the header if present
     let token = 
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
@@ -43,7 +44,14 @@ module.exports.verifyAuth = function (req, res, next) {
         //if can verify the token, set req.user and pass to next middleware
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
         req.user = decoded;
-        return res.render('dashboard',{title: 'Dashboard'})
+        let userType = await User.findById(req.user._id);
+        userType = userType.roles[0]
+        if(req.originalUrl === '/'){
+            return res.render('dashboard',{title: 'Dashboard', user: userType})
+        }
+        req.userType = userType;
+        console.log('done auth')
+        return next();
     } catch (ex) {
         console.log(ex + 'verifyauth')
         responseHandler(null, res, "Unauthorized", 401);
