@@ -30,20 +30,25 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
         // fetchName = id => {
         //   return User.findOne({_id: id}).then(user => user.name);
         // };
-        router.get('/lesson/:id/quizzes/', async (req, res) => {
+        router.get('/lesson/:id/quizzes/:page', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
+            let limit = 10
+            let page = req.params.page || 1
             const lessonId = req.params.id;
             await Lesson.findById(lessonId)                    
                 .populate('quizzes')
+                .skip((limit * page) - limit)
+                .limit(limit)
                 .exec(async function (err, results) {
                   if (err) { console.log(err); };
-                  res.render('admin/quizzes/index', {title: 'All quizzes', lessons: results})
+                  count = results.quizzes.length;
+                  res.render('admin/quizzes/index', {title: 'All quizzes', lessons: results, user: req.userType, current: page, pages: Math.ceil(count / limit)})
                 })
            })
-        router.get('/course/:id/lesson/new',admin.verifyAdministration, (req, res) => {
-            res.render('lesson/create', {title: 'Create a lesson', courseId: req.params.id})
+        router.get('/course/:id/lesson/new', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
+            res.render('lesson/create', {title: 'Create a lesson', courseId: req.params.id, user: req.userType})
            })
         // Create and Post lessons
-        router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), admin.verifyAdministration, async (req, res) => {
+        router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             // find out which course you are adding a lesson to
             let lesson;
             const id = req.params.id;
@@ -118,13 +123,22 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                 })
         });
 
-        router.get('/', admin.verifyAdministration, (req, res) => {
-            Lesson.find()
+        router.get('/:page', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
+            let limit = 10
+            let page = req.params.page || 1
+            Lesson
+                .find({})
+                .skip((limit * page) - limit)
+                .limit(limit)
                .exec(function(err, results) {
                 if(err) {console.log(err)}
-                res.render('lesson/index', {title: 'All Lessons', courses: results})
+                Lesson
+                    .count()
+                    .exec(function(err, count) {
+                    if(err) {console.log(err)}
+                    res.render('lesson/index', {title: 'All Lessons', courses: results, user: req.userType, current: page, pages: Math.ceil(count / limit)})
              })
-         });
+         })});
 
         router.get('/lesson/:id/next',auth.verifyAuth, async (req, res) => {
             let lessonId = req.params.id;

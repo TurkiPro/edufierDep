@@ -45,11 +45,12 @@ module.exports.verifyAuth = async function (req, res, next) {
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
         req.user = decoded;
         let userType = await User.findById(req.user._id);
-        userType = userType.roles[0]
+        req.userType = userType.roles[0];
+        req.userName = userType.name;
+        req.userId = userType._id;
         if(req.originalUrl === '/'){
-            return res.render('dashboard',{title: 'Dashboard', user: userType})
+            return res.render('dashboard',{title: 'Dashboard', user: req.userType, userName: req.userName})
         }
-        req.userType = userType;
         console.log('done auth')
         return next();
     } catch (ex) {

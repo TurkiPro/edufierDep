@@ -18,7 +18,12 @@ post: {
 user:{
    type: mongoose.Schema.Types.ObjectId,
    ref: 'users'
-}
- })
+},
+hearts: [{
+   type: mongoose.Schema.Types.ObjectId,
+   ref: 'users'
+}]
+
+})
 
 module.exports = mongoose.model('Comment', commentSchema);

@@ -34,6 +34,24 @@ const router = express.Router();
 
     })
 
+    router.post('/comment/:id/heart', auth.verifyAuth, async(req, res) => {
+        const id = req.userId;
+        Comment.findById(req.params.id).then(async comment => {
+            if(comment.hearts.includes(id)){
+                comment.hearts.pull(id);
+                await comment.save()
+                res.status(200).json({message: 'Comment has been un liked'})
+            }else{
+                comment.hearts.push(id);
+                await comment.save()
+                console.log(comment)
+                res.status(200).json({message: 'Comment has been liked'})
+            }
+        }).catch(err => {
+            res.status(404).json({message: 'error'})
+        })
+    })
+
 function check_user(header){
     let token = header.cookies.Authorization;
     if (!token) {

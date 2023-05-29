@@ -4,7 +4,8 @@ const User = require('../models/users');
 const Lesson = require("../models/lessons");
 const Quizz = require("../models/quizzes");
 const completion = require("../controllers/completion");
-const auth = require("../middleware/auth")
+const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const router = express.Router();       
 
 
@@ -12,11 +13,11 @@ const router = express.Router();
         // fetchName = id => {
         //   return User.findOne({_id: id}).then(user => user.name);
         // };
-        router.get('/lesson/:id/quiz/new', (req, res) => {
-            res.render('quiz/create', {title: 'Create a quizz', lessonId: req.params.id})
+        router.get('/lesson/:id/quiz/new', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
+            res.render('quiz/create', {title: 'Create a quizz', lessonId: req.params.id, user: req.userType})
            })
         // Create and Post quizzes
-        router.post('/lesson/:id/quiz/new', async (req, res) => {
+        router.post('/lesson/:id/quiz/new', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             // find out which lesson you are adding a quizz to
                 const id = req.params.id;
             // find the user
@@ -148,7 +149,7 @@ const router = express.Router();
                 })
         });
 
-        router.delete('/quiz/:id', async (req, res) => {
+        router.delete('/quiz/:id', admin.verifyAdministration, async (req, res) => {
             let quizzId = req.params.id;
             await Quizz.findByIdAndDelete(quizzId)
                 .then(async quizz => {

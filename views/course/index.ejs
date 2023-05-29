@@ -5,28 +5,73 @@
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
                 <div class="container list">
-                    <% courses.forEach(function(course, i){ %>
-                        <div class="row mt-3">
-                            <div class="col-4">
-                                <a href="/courses/course/<%= course.id %>">
-                                    <h3><%= course.name %> </h3>
-                                    <h4><%= course.isActive %> </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 bg-secondary text-white">
-                                <a href="/lessons/course/<%= course.id %>/lesson/new" target="_blank">add a lesson</a>
-                            </div>
-                            <div class="col-2 bg-secondary text-white">
-                                <a href="/courses/course/<%= course.id %>/lessons" target="_blank">all course lessons</a>
-                            </div>
-                            <div class="col-2 bg-info text-white">
-                                <a href="/courses/course/<%= course.id %>/edit" target="_blank">edit</a>
-                            </div>
-                            <div class="col-2 bg-danger text-white">
-                                <a onclick="deleteWindow(this)" data-id="<%= course.id %>">delete</a>
-                            </div>
-                        </div>
-                    <% }); %>
+                    <table>
+                        <tr>
+                            <th>Course name</th>
+                            <th>Status</th>
+                            <th>Add new lesson</th>
+                            <th>All related lessons</th>
+                            <th>Action</th>
+                        </tr>
+                        <% courses.forEach(function(course, i){ %>
+                            <tr>
+                                <td>
+                                    <a href="/courses/course/<%= course.id %>">
+                                        <%= course.name %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <% if(course.isActive == true){ %>
+                                        <span class="table_status" id="active">Active</span>
+                                    <% }else{ %>
+                                        <span class="table_status" id="inactive">Inactive</span>
+                                    <% }; %>
+                                </td>
+                                <td>
+                                    <a href="/lessons/course/<%= course.id %>/lesson/new" target="_blank">add a lesson</a>
+                                </td>
+                                <td>
+                                    <a href="/courses/course/<%= course.id %>/lessons/1" target="_blank">all course lessons</a>
+                                </td>
+                                <td>
+                                    <a href="/courses/course/<%= course.id %>/edit" target="_blank"><img src="/assets/edit.svg" alt=""></a>
+                                    <a onclick="deleteWindow(this)" data-id="<%= course.id %>"><img src="/assets/delete.svg" alt=""></a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        <tr>
+                            <td colspan="5">
+                            <% if (pages > 0) { %>
+                                <ul class="pagination justify-content-center">
+                                    <% if (current == 1) { %>
+                                        <li class="page-item disabled"><a class="page-link">&lt;&lt;</a></li>
+                                    <% } else { %>
+                                        <li class="page-item"><a class="page-link" href="/courses/1">&lt;&lt;</a></li>
+                                    <% } %>
+                                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                    <% if (i !== 1) { %>
+                                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    <% } %>
+                                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                        <% if (i == current) { %>
+                                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                                        <% } else { %>
+                                            <li class="page-item"><a class="page-link" href="/courses/<%= i %>"><%= i %></a></li>
+                                        <% } %>
+                                        <% if (i == Number(current) + 4 && i < pages) { %>
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                        <% } %>
+                                    <% } %>
+                                    <% if (current == pages) { %>
+                                        <li class="page-item disabled"><a class="page-link">&gt;&gt;</a></li>
+                                    <% } else { %>
+                                        <li class="page-item"><a class="page-link" href="/courses/<%= pages %>">&gt;&gt;</a></li>
+                                    <% } %>
+                                </ul>
+                            <% } %>
+                            </td>
+                        </tr>
+                    </table>
                     <!-- <div class="row mt-5">
                         <div class="d-flex justify-content-center">
                             <a href="/posts/new" class="d-flex align-items-center justify-content-between"> <span>Ask Something</span>  <i class="bi bi-telegram"></i></a>

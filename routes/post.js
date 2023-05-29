@@ -30,10 +30,12 @@ const router = express.Router();
                     await fetchName(comment.user).then((name) => {
                       comment =
                       {
+                        id: comment._id,
                         text: comment.text,
                         post: comment.post,
                         userName: name,
                         user: comment.user,
+                        hearts: comment.hearts.length,
                         date: comment.date
                       };
                     });

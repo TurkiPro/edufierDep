@@ -7,7 +7,8 @@ module.exports.verifyAdministration = function (req, res, next) {
     req.headers.authorization || req.body.authorization || req.query.authorization || req.headers["x-access-authorization"] || req.cookies.Authorization;
     //if no token found, return response (without going to the next middelware)
     if (!token) {
-        return responseHandler(null, res, "Unauthorized", 401);
+        // return responseHandler(null, res, "Unauthorized", 401);
+        return res.status(401).render('unauthorized')
     }
     try {
         if (token.includes("Bearer")) {
@@ -17,12 +18,16 @@ module.exports.verifyAdministration = function (req, res, next) {
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN);
         req.user = decoded;
         console.log(req.user)
-        if(req.user.roles[0] !== "admin"){
+        // if(req.user.roles[0] !== "admin"){
+        //     throw new Error('Not allowed here')
+        // }
+        if(req.userType !== "admin"){
             throw new Error('Not allowed here')
         }
-        next();
+       return next();
     } catch (ex) {
         console.log(ex + 'test')
-        responseHandler(null, res, "Unauthorized", 401);
+        // responseHandler(null, res, "Unauthorized", 401);
+        res.status(401).render('unauthorized')
     }
 }

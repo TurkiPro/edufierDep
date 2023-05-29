@@ -46,21 +46,27 @@ router.route("/fetchcourses").get(courseController.index)
         //           res.render('course/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername });
         //         })
         //     })
-        router.get('/course/:id/lessons/',admin.verifyAdministration, async (req, res) => {
+        router.get('/course/:id/lessons/:page', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
           const courseId = req.params.id;
+          let limit = 10
+          let page = req.params.page || 1
+
           await Course.findById(courseId)                    
               .populate('lessons')
+              .skip((limit * page) - limit)
+              .limit(limit)
               .exec(async function (err, results) {
                 if (err) { console.log(err); };
-                res.render('admin/lessons/index', {title: 'All lessons', courses: results})
-              })  
-         })
+                count = results.lessons.length;
+                      res.render('admin/lessons/index', {title: 'All Lessons', courses: results, user: req.userType, current: page, pages: Math.ceil(count / limit)})   
+              })
+        });
          
-          router.get('/new',admin.verifyAdministration, (req, res) => {
-            res.render('course/create', {title: 'Create a course'})
+          router.get('/new', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
+            res.render('course/create', {title: 'Create a course', user: req.userType})
            })
    
-          router.post('/new',admin.verifyAdministration, (req, res) => {
+          router.post('/new', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
             // find the user
             const user = check_user(req);
             if(user === null){
@@ -76,13 +82,24 @@ router.route("/fetchcourses").get(courseController.index)
              })
             })
    
-          router.get('/', admin.verifyAdministration, (req, res) => {
-             Course.find()
-                .exec(function(err, results) {
-                 if(err) {console.log(err)}
-                 res.render('course/index', {title: 'All courses', courses: results})
-              })
-          });
+          router.get('/:page', auth.verifyAuth, admin.verifyAdministration, (req, res) => {
+            let limit = 10
+            let page = req.params.page || 1
+             Course
+              .find({})
+              .skip((limit * page) - limit)
+              .limit(limit)
+                  .exec(function(err, results) {
+                    if(err) {console.log(err)}
+                    Course
+                      .count()
+                      .exec(function(err, count) {
+                        console.log(count)
+                        if (err) {console.log(err)}
+                        res.render('course/index', {title: 'All courses', courses: results, user: req.userType, current: page, pages: Math.ceil(count / limit)})
+                  
+                })
+          })});
 
           router.get('/course/:id',auth.verifyAuth, async (req, res) =>{
             let courseId = req.params.id
@@ -92,15 +109,15 @@ router.route("/fetchcourses").get(courseController.index)
             })
           })
 
-          router.get('/course/:id/edit', admin.verifyAdministration, async (req, res) =>{
+          router.get('/course/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) =>{
             let courseId = req.params.id
             await Course.findById(courseId).exec(async function (err, results) {
               if (err) { console.log(err); };
-              res.render('course/edit', { title: 'Editing '+ results.name, course: results });
+              res.render('course/edit', { title: 'Editing '+ results.name, course: results, user: req.userType });
             })
           })
           
-          router.put('/course/:id/edit',admin.verifyAdministration, async (req, res) => {
+          router.put('/course/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             let courseId = req.params.id
             const course = await Course.findById(courseId)
             course.name = req.body.name;

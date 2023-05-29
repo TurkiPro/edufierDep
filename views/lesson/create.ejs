@@ -3,8 +3,8 @@
     <div class="container-fluid">
         <div class="row">
             <%- include('../nav.ejs') -%>
-            <div class="col-sm p-3 min-vh-100">
-                <div class="container">
+            <div class="col-sm p-3 min-vh-100 d-flex align-items-center">
+                <div class="container create_card">
                     <form action="/lessons/course/<%= courseId %>/lesson/new" method="post" class="form-signin creation" enctype="multipart/form-data">
                         <div class="form-group">
                           <label for="name">Name of the lesson</label>

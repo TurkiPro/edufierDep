@@ -5,15 +5,24 @@
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
                 <div class="container comments_container">
-                    <div class="row mt-3">
-                        <h3><%= postUsername %> </h3>
-                        <h3><%= post.title %> </h3>
-                        <h5><%= post.text %></h5>
+                    <div class="row mt-3 d-flex align-items-center">
+                        <div class="col-9">
+                            <h3><%= postUsername %> </h3>
+                            <p><%= post.text %></p>
+                        </div>
+                        <div class="col-3 user_comment">
+                            <a class="heart_inactive" onclick="likedPost(this)" data-id="<%= post.id %>"></a>
+                        </div>
                     </div>
                     <% comments.forEach(function(comment, i){ %>
-                    <div class="row mt-3 <% if (comment.user == currentUser) { __append('comment_right') } %>">
-                        <h3><%= comment.userName %> </h3>
-                        <h5><%= comment.text %></h5>
+                    <div class="row mt-3 align-items-center <% if (comment.user == currentUser) { __append('comment_right') } %>">
+                        <div class="col-3">
+                            <a class="<% if (comment.hearts) { __append('heart_active') }else{__append('heart_inactive')} %>" onclick="likedComment(this)" data-id="<%= comment.id %>"><%= comment.hearts %></a>
+                        </div>
+                        <div class="col-9 current_user_comment">
+                            <h3>You</h3>
+                            <p><%= comment.text %></p>
+                        </div>
                     </div>
                     <% }); %>
                 </div>
@@ -35,30 +44,24 @@
     </div>
     <!-- bootstrap script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <!-- <script>
-        
-        window.onload=function() {
-        const eform = document.querySelector('form');
-        eform.addEventListener('submit', event =>{
-            event.preventDefault();
-
-            const formData = new FormData(eform);
-            const data = Object.fromEntries(formData);
-
-            fetch('http://localhost:3000/api/v1/auth/login', {
-                method: 'POST',
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-
-            }).then(res => res.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error));
-
-        })
-    }
-    </script> -->
+    <script>
+       async function likedComment (element){
+            const likedComment = element.dataset.id;
+            try {
+            const res = await fetch('/comments/comment/'+likedComment+'/heart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+            })
+            const data = await res.json()
+            if (res.status === 400 || res.status === 401) {
+            return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
+            }
+            console.log(data)
+        location.reload();
+        } catch (err) {
+            console.log(err.message)
+            }
+        }
+    </script>
 </body>
 </html>

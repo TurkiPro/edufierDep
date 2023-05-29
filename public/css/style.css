@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
 
 body{
     background-color: #5830C4;
@@ -17,8 +18,15 @@ body{
 }
 
 .sign-in img{
-    width: 100%;
     max-width: 125px;
+}
+
+.sign-in h1{
+    border-left: 7px solid #5730C3;
+    font-size: 1.9rem;
+    font-weight: 700;
+    min-height: 100%;
+    line-height: inherit;
 }
 
 .sign-in h2{
@@ -182,8 +190,8 @@ nav .d-flex , .nav{
 }
 #alert-icon{
     color: white;
-    width: 8vh;
-    height:8vh ;
+    fill: inherit;
+    max-width: 7vh;
     align-self: baseline;
     
 }
@@ -210,11 +218,10 @@ nav .d-flex , .nav{
     
 }
 #recent_course-h3{
-    position: absolute;
+    display: grid;
     color: white;
-    left: 22vh;
-    top: 10vh;
     opacity: 0.7;
+    justify-content: right;
 }
 #community{
     position: relative;
@@ -239,6 +246,9 @@ nav .d-flex , .nav{
 }
 #bonus{
     position: relative;
+}
+#bonus div{
+    background-color: inherit;
 }
 #coin-img{
     align-self: center;
@@ -310,6 +320,19 @@ nav .d-flex , .nav{
     text-decoration: none;
 }
 
+.posts_container .row .col-2 span {
+    background-image: url(../assets/community_comments.svg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    background-size: 58px 57px;
+    background-repeat: no-repeat;
+    width: 58px;
+    height: 57px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
 .posts_container a span{
     float: left;
 }
@@ -334,6 +357,43 @@ nav .d-flex , .nav{
     width: 50%;
 }
 
+.comments_container h3{
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+}
+
+.comments_container p{
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    color: #544d5a45;
+    font-size: 0.9rem;
+}
+
+.comments_container .heart_inactive {
+    background-image: url(../assets/heart_grey.png);
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 49px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.comments_container .heart_active {
+    background-image: url(../assets/heart.png);
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 55px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+}
+
 .container .comment_send{
     background-color: white;
     width: 100%;
@@ -351,6 +411,10 @@ nav .d-flex , .nav{
 .comment_right{
     margin-left: auto; 
     margin-right: 0;
+}
+
+.current_user_comment, .user_comment{
+    text-align: right;
 }
 
 .comment_send div input{
@@ -373,24 +437,7 @@ nav .d-flex , .nav{
 }
 
 
-/* create pages design */
 
-.creation{
-    background-color: white;
-    padding: 2rem 2rem;
-    border-radius: 10px;
-}
-
-
-.row > .list{
-    display: flex;
-    justify-items: center;
-}
-
-.list a{
-    text-decoration: none;
-    color: white;
-}
 
 /* lessons */
 
@@ -582,4 +629,25 @@ nav .d-flex , .nav{
     display: inline-block;
     background-color: red;
     transform: translate(100, 0);
+}
+
+/* creating stuff styling */
+
+.create_card{
+    background-color: white;
+    padding: 2em 4em;
+    border-radius: 15px;
+}
+
+.create_card .form-group{
+    padding: 0.5em 0;
+}
+
+.create_card textarea{
+    min-height: 5em;
+}
+
+.create_card button{
+    text-align: right;
+    background-color: #5A0FC8;
 }

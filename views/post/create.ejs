@@ -3,8 +3,8 @@
     <div class="container-fluid">
         <div class="row">
             <%- include('../nav.ejs') -%>
-            <div class="col-sm p-3 min-vh-100">
-                <div class="container">
+            <div class="col-sm p-3 min-vh-100 d-flex align-items-center">
+                <div class="container create_card">
                     <form action="/posts/new" method="post" class="form-signin">
                         <div class="form-group">
                           <label for="name">Title</label>
@@ -14,7 +14,9 @@
                           <label for="name">Message</label>
                           <textarea type="text" class="form-control" name="text" placeholder="Enter text"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                       </form>
                 </div>
             </div>
