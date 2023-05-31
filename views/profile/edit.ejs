@@ -3,8 +3,8 @@
     <div class="container-fluid">
         <div class="row">
             <%- include('../nav.ejs') -%>
-            <div class="col-sm p-3 min-vh-100">
-                <div class="container mt-3">
+            <div class="col-sm p-3 min-vh-100 d-flex align-items-center">
+                <div class="container mt-3 create_card">
                     <form action="/profile/edit" method="PUT" class="form-signin" enctype="multipart/form-data">
                         <div class="">
                             <% if(user.userProfile !== undefined){ if (user.userProfile.profileImage !== undefined){ %>

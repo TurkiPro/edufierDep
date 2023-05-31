@@ -105,11 +105,11 @@ const router = express.Router();
                 })
         });
 
-        router.get('/', (req, res) => {
+        router.get('/',auth.verifyAuth, (req, res) => {
             Quizz.find()
                .exec(function(err, results) {
                 if(err) {console.log(err)}
-                res.render('quiz/index', {title: 'All quizzes', quizzes: results})
+                res.render('quiz/index', {title: 'All quizzes', quizzes: results, user: req.userType})
              })
          });
 
@@ -149,7 +149,7 @@ const router = express.Router();
                 })
         });
 
-        router.delete('/quiz/:id', admin.verifyAdministration, async (req, res) => {
+        router.delete('/quiz/:id', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             let quizzId = req.params.id;
             await Quizz.findByIdAndDelete(quizzId)
                 .then(async quizz => {

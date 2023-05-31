@@ -192,7 +192,31 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                 })
         });
 
-        router.delete('/lesson/:id',admin.verifyAdministration, async (req, res) => {
+        router.get('/lesson/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) =>{
+            let lessonId = req.params.id
+            await Lesson.findById(lessonId).exec(async function (err, results) {
+              if (err) { console.log(err); };
+              res.render('admin/lessons/edit', { title: 'Editing '+ results.name, lesson: results, user: req.userType });
+            })
+          })
+          
+          router.put('/lesson/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
+            let lessonId = req.params.id
+            const lesson = await Lesson.findById(lessonId)
+            lesson.name = req.body.name;
+            lesson.isActive = req.body.activation;
+            try {
+              const result = await lesson.save();
+              console.log(result); // result
+              res.status(200).json({message: "success"});
+            } catch (err) {
+              console.error("something goes wrong");
+              res.json({ error: error })
+            }
+              res.redirect('/lessons/1')
+          })
+
+        router.delete('/lesson/:id', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             let lessonId = req.params.id;
             await Lesson.findByIdAndDelete(lessonId)
                 .then(async lesson => {

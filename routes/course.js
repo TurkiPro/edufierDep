@@ -78,7 +78,7 @@ router.route("/fetchcourses").get(courseController.index)
              });
              course.save(function(err) {
               if(err) {console.log(err)}
-                res.redirect('/')
+                res.redirect('/courses/1')
              })
             })
    
@@ -130,17 +130,19 @@ router.route("/fetchcourses").get(courseController.index)
               console.error("something goes wrong");
               res.json({ error: error })
             }
-              res.redirect('/')
+              res.redirect('/courses/1')
           })
 
-          router.delete('/course/:id',admin.verifyAdministration, async (req, res) => {
+          router.delete('/course/:id',auth.verifyAuth,admin.verifyAdministration, async (req, res) => {
             let courseId = req.params.id;
             await Course.findByIdAndDelete(courseId)
                 .then(async course => {
                   if(course.lessons.length){
+                    console.log(course + 'here')
                     for (const lesson of course.lessons) {
                       await lessons.findByIdAndDelete(lesson._id)
                       .then(async lesson => {
+                        console.log(lesson + 'here')
                         if(lesson.quizzes.length){
                           for (const quiz of lesson.quizzes) {
                             await Quiz.findByIdAndDelete(quiz._id)
