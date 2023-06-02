@@ -8,7 +8,7 @@
                     <div class="row mt-3 d-flex align-items-center">
                         <div class="col-9">
                             <h3><%= postUsername %> </h3>
-                            <p><%= post.text %></p>
+                            <p dir="auto"><%= post.text %></p>
                         </div>
                         <div class="col-3 user_comment">
                             <a class="heart_inactive" onclick="likedPost(this)" data-id="<%= post.id %>"></a>
@@ -20,8 +20,8 @@
                             <a class="<% if (comment.hearts) { __append('heart_active') }else{__append('heart_inactive')} %>" onclick="likedComment(this)" data-id="<%= comment.id %>"><%= comment.hearts %></a>
                         </div>
                         <div class="col-9 current_user_comment">
-                            <h3>You</h3>
-                            <p><%= comment.text %></p>
+                            <h3 dir="auto">You</h3>
+                            <p dir="auto"><%= comment.text %></p>
                         </div>
                     </div>
                     <% }); %>

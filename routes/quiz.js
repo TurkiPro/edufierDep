@@ -149,6 +149,39 @@ const router = express.Router();
                 })
         });
 
+        router.get('/quiz/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) =>{
+            let quizId = req.params.id
+            await Quizz.findById(quizId).exec(async function (err, results) {
+              if (err) { console.log(err); };
+              res.render('admin/quizzes/edit', { title: 'Editing '+ results.name, quiz: results, user: req.userType });
+            })
+        })
+
+        router.put('/quiz/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
+            let quizId = req.params.id
+            const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
+            let points = [];
+            for (let index = 0; index < req.body.tries; index++) {
+                points[index] = req.body.points[index];
+            }
+            const quiz = await Quizz.findById(quizId)
+            quiz.name = req.body.name;
+            quiz.data = [req.body.information];
+            quiz.answer = req.body.answer;
+            quiz.givePoints = isTrueSet;
+            quiz.maxTries = req.body.tries;
+            quiz.pointsArray = points;
+            try {
+              const result = await quiz.save();
+              console.log(result); // result
+              res.status(200).json({message: "success"});
+            } catch (err) {
+              console.error("something goes wrong");
+              res.json({ error: error })
+            }
+              res.redirect('lessons/lesson/'+quiz.lesson+'/quizzes/1')
+          })
+
         router.delete('/quiz/:id', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             let quizzId = req.params.id;
             await Quizz.findByIdAndDelete(quizzId)

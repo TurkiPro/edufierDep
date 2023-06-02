@@ -202,9 +202,17 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
           
           router.put('/lesson/:id/edit', auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             let lessonId = req.params.id
+            const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
+            let points = [];
+            for (let index = 0; index < req.body.tries; index++) {
+                points[index] = req.body.points[index];
+            }
             const lesson = await Lesson.findById(lessonId)
             lesson.name = req.body.name;
-            lesson.isActive = req.body.activation;
+            lesson.data = [req.body.information];
+            lesson.givePoints = isTrueSet;
+            lesson.maxTries = req.body.tries;
+            lesson.pointsArray = points;
             try {
               const result = await lesson.save();
               console.log(result); // result

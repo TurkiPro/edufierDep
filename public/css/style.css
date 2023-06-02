@@ -369,8 +369,8 @@ nav img{
 
 .comments_container p{
     font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    color: #544d5a45;
+    font-weight: 700;
+    color: #544d5aac;
     font-size: 0.9rem;
 }
 
@@ -456,36 +456,7 @@ nav img{
     border-radius: 10px;
 }
 
-.youtube-video {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    width: 80%;
-    margin-left: 10%;
-  }
-  /* Edited*/
-.btn-div{
-    justify-content: space-around;
-    margin-left: 20%;
-    margin-top: 5px;
-}
-#btn-previous{
-    height: 50px;
-    width: 200px;
-    border-radius: 19px;
-    background-color: #6D7D93;
-    border-color: #6D7D93;
-    color: white;
-   
-}
-#btn-next{
-    height: 50px;
-    width: 200px;
-    border-radius: 19px;
-    background-color: #5A0FC8;
-    border-color: #5A0FC8;
-    color: white;
-    float: right;
-}
+
 
   /* cycle */
 
@@ -615,6 +586,48 @@ nav img{
     cursor: grabbing;
     cursor: -webkit-grabbing;
     transform: scale(1);
+}
+
+/* video lesson */
+
+.lessons_container > #video-container{
+    background-color: unset;
+    max-width: 100vh;
+    padding: unset;
+}
+
+#video-container h5{
+    color: white;
+}
+
+#btn-div{
+    background-color: unset;
+    padding: unset;
+}
+.youtube-video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+#btn-div button{
+    border-radius: 19px;
+    font-size: 1.3rem;
+    padding: 0.5em 0;
+    min-width: 250px;
+    max-width: 250px;
+}
+
+#btn-previous{
+    background-color: #6D7D93;
+    border: 1px solid #6D7D93;
+    color: white;
+   
+}
+#btn-next{
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    color: #5830C5;
 }
 
 /* interactive image */

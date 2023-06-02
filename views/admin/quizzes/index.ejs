@@ -27,7 +27,7 @@
                                     <%= quiz.data %>
                                 </td>
                                 <td>
-                                    <a href="" target="_blank"><img src="/assets/edit.svg" alt=""></a>
+                                    <a href="/quizzes/quiz/<%= quiz.id %>/edit" target="_blank"><img src="/assets/edit.svg" alt=""></a>
                                     <a onclick="deleteWindow(this)" data-id="<%= quiz.id %>"><img src="/assets/delete.svg" alt=""></a>
                                 </td>
                             </tr>

@@ -1,0 +1,5 @@
+
+<input type="text" class="form-control" name="information" placeholder="Enter quiz question" value="<%- quiz.data[0] %>">
+<label for="answer">Choose the correct answer</label> 
+<input name="answer" type="radio" value="true" <% if (quiz.answer === 'true') { __append('checked="checked"') } %> />True 
+<input name="answer" type="radio" value="false" <% if (quiz.answer === 'false') { __append('checked="checked"') } %> />False
