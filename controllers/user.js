@@ -132,6 +132,8 @@ exports.updateEditProfile = async (req, res, next) => {
             }else{
                 body["password"] = await bcrypt.hash(req.body.newPassword, 10);
             }
+        }else{
+            body["password"] = currentUser.password;
         }
         if(req.body.birthDay){
             profileFilter['birthDate'] = req.body.birthDay;

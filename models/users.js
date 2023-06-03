@@ -36,6 +36,10 @@ const userSchema = Schema({
         ],
         default: ["customer"],
     },
+    earnedPoints: {
+        type: Number,
+        default: 0
+    },
     userProfile: {
         type:profileSchema
     }

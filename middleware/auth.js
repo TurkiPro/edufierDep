@@ -48,8 +48,9 @@ module.exports.verifyAuth = async function (req, res, next) {
         req.userType = userType.roles[0];
         req.userName = userType.name;
         req.userId = userType._id;
+        req.userPoints = userType.earnedPoints;
         if(req.originalUrl === '/'){
-            return res.render('dashboard',{title: 'Dashboard', user: req.userType, userName: req.userName})
+            return res.render('dashboard',{title: 'Dashboard', user: req.userType, userName: req.userName, points: req.userPoints})
         }
         console.log('done auth')
         return next();

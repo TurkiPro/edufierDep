@@ -4,7 +4,7 @@
         <div class="row">
             <%- include('../nav.ejs') -%>
             <div class="col-sm p-3 min-vh-100">
-                <div class="container lessons_container">
+                <div class="container quizzes_container">
                     <% if (information.typeOfQuiz === 1) { %>
                         <!-- <%- include('mcq.ejs') -%> -->
                     <%} else if (information.typeOfQuiz === 2) { %>
@@ -12,7 +12,7 @@
                     <%} else  { %>
                     <p> Other type </p>
                     <% } %>
-                    <a href="/quizzes/quiz/<%= information.id %>/next">Next quiz</a>
+                    <!-- <a href="/quizzes/quiz/<%= information.id %>/next">Next quiz</a> -->
                 </div>
             </div>
         </div>

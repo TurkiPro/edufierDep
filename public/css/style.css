@@ -86,6 +86,7 @@ body{
 
 nav, #navbarSupportedContent{
     height: 90%;
+    z-index: 99;
 }
 
 nav .d-flex , .nav{
@@ -94,6 +95,10 @@ nav .d-flex , .nav{
 
 nav img{
     min-width: 50px;
+}
+
+#navIcon{
+    color: black;
 }
 
 .nav-link{
@@ -149,9 +154,104 @@ nav img{
     color: white;
 }
 
+.burger {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    display: none;
+    place-items: center;
+    padding: 0;
+    width: 82px;
+    height: 82px;
+    font-size: 30px;
+    color: #5830C5;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  
+
+  .burger i:last-child {
+    display: none;
+  }
+  
+  body.open .burger i:first-child {
+    display: none;
+  }
+  
+  body.open .burger i:last-child {
+    display: block;
+    color: white;
+  }
+  
+  .overlay {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgb(27 32 44 / 70%);
+    visibility: hidden;
+    opacity: 0;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+  }
+  
+  body.open .overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+
+@media (max-width: 1199.98px) {
+    #navbarSupportedContent{
+        height: 100%;
+    }
+    .burger {
+        display: grid;
+      }
+    .navbar-collapse {
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        width: 260px;
+        height: 100%;
+        padding: 18px 20px 20px;
+        border-radius: 0 25px 25px 0;
+        background: white;
+        box-shadow: 0 0 20px rgb(0 0 0 / 70%);
+        display: none;
+        transition: 1s;
+    }
+
+    .navbar-collapse.collapsing {
+        left: -75%;
+        transition: height 0s ease;
+    }
+
+    body.open .navbar-collapse {
+        left: 0;
+        display: block;
+        transition: 1s;
+    }
+
+    .navbar-toggler.collapsed ~ .navbar-collapse {
+        transition: left 500ms ease-in-out;
+    }
+}
+
 /* body .row .col-sm .container {
     max-width: auto;
 } */
+
+.dash_info{
+    position: relative;
+    z-index: -1;
+}
 
 .dash_info .col-12 div{
     min-height: 48%;
@@ -182,7 +282,7 @@ nav img{
 
 #user_name{
     position: relative;
-    width: 90%;
+    /* width: 90%; */
     background-color: #D33630;
     color: white;
 }
@@ -202,7 +302,7 @@ nav img{
 }
 #user_lvl{
     position: relative;
-    width: 90%;
+    /* width: 90%; */
     background-color: #12C4B2;
     color: white;
 }
@@ -216,7 +316,7 @@ nav img{
 
 #recent_course{
     position: relative;
-    width: 90%;
+    /* width: 90%; */
     background: linear-gradient(169.73deg, rgba(204, 62, 7, 0.23) -132.03%, #DF7377 -58.87%);
     background-attachment: fixed; 
     color: white;
@@ -230,7 +330,7 @@ nav img{
 }
 #community{
     position: relative;
-    width: 90%;
+    /* width: 90%; */
     background: linear-gradient(182.25deg, #AEE1FD -85.84%, #388DF2 67%, #43A6DD 97.45%, #8DB9FD 156.04%, #C1CDE3 259.18%, #D99DCF 259.18%);
     background-attachment: fixed; 
     color: white;
@@ -238,7 +338,6 @@ nav img{
 }
 #community-svg{
     /* image 24 */
-
     position: absolute;
     width: 13vh;
     height: 11vh;
@@ -275,15 +374,16 @@ nav img{
     color: #5830C4;
 }
 
-@media only screen and (max-width: 40em) { 
+@media (max-width: 1199.98px) {
     .logout{
         margin-top: auto;
     }
     .dashboard_bg{
-        position: sticky;
+        position: fixed;
         border-radius: 0;
-        height: auto;
+        height: 100px;
         top: 0;
+        min-height: auto;
     }
     .nav-item{
         width: auto;
@@ -669,3 +769,78 @@ nav img{
     text-align: right;
     background-color: #5A0FC8;
 }
+
+/* quizzes */
+.quizzes_container{
+    height: auto;
+}
+/* tnf */
+
+#tnf_container{
+    margin-top: 20vh;
+    background-color: white;
+    border-radius: 80px 80px 0 0 ;
+    height: 80vh;
+    overflow-y: hidden;
+}
+
+#tnf_container h1{
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+
+    color: #5830c563;
+}
+
+#tnf_container label{
+    position: relative;
+}
+#tnf_container label input{
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+
+input[id="correct"]:hover + svg,
+input[id="correct"]:checked + svg,
+input[id="correct"]:focus + svg{
+    fill: #0FD93C;
+}
+input[id="uncorrect"]:hover + svg,
+input[id="uncorrect"]:checked + svg,
+input[id="uncorrect"]:focus + svg{
+    fill: #CD0C0C;
+}
+
+
+#tnf_container label svg{
+    width: 10vw;
+}
+
+#tnf_container input + svg {
+	cursor: pointer;
+}
+
+input[type="radio"]:checked ~ label {
+    opacity: 1;
+      border: 1px solid ;
+}
+
+
+#tnf_container button{
+    background-color: #5830C5;
+    border-radius: 25px;
+    color: white;
+    border: 1px solid transparent;
+    padding: 0.5em 3em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+}
+
+
+
+
+
+
