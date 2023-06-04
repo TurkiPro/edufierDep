@@ -79,6 +79,7 @@ body{
     border-radius: 0 20px 20px 0;
     position: relative;
     min-height: 100%;
+    z-index: 99;
 }
 .navbar{
     
@@ -242,6 +243,15 @@ nav img{
     .navbar-toggler.collapsed ~ .navbar-collapse {
         transition: left 500ms ease-in-out;
     }
+    .nav-item{
+        width: 100%;
+        justify-content: unset;
+        display: flex;
+    }
+    .adjuster{
+        width: unset;
+        text-align: left;
+    }
 }
 
 /* body .row .col-sm .container {
@@ -250,12 +260,11 @@ nav img{
 
 .dash_info{
     position: relative;
-    z-index: -1;
+    z-index: 1;
 }
 
 .dash_info .col-12 div{
     min-height: 48%;
-    background-color: white;
     border-radius: 30px;
     padding: 2rem;
 }
@@ -336,18 +345,14 @@ nav img{
     color: white;
   
 }
-#community-svg{
-    /* image 24 */
-    position: absolute;
-    width: 13vh;
-    height: 11vh;
-    right: 1vh;
-    top: 3vh;
-    
-
-    background: url(image.png);
-
+#community div{
+    padding: unset;
 }
+
+#community-svg{
+    width: 11vh;
+}
+
 #bonus{
     position: relative;
 }
