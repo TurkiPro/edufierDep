@@ -144,11 +144,11 @@ nav img{
     text-decoration: none;
     border-radius: 50px;
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: white;
     transition: 0.6s;
     background: linear-gradient(255.18deg, #5830C5 17.48%, #582ECC 63.57%, #5830C5 88.78%);
-    padding: 1rem 4rem;
+    padding: 1rem 3rem;
 }
 
 .col-sm h2{
@@ -208,6 +208,7 @@ nav img{
 @media (max-width: 1199.98px) {
     #navbarSupportedContent{
         height: 100%;
+        overflow-y: scroll;
     }
     .burger {
         display: grid;
@@ -452,6 +453,13 @@ nav img{
     font-size: 4rem;
 }
 
+@media (max-width: 1199.98px) {
+
+    .posts_container .row a{
+        width: unset;
+    }
+}
+
 
 /* comments */
 
@@ -477,6 +485,7 @@ nav img{
     font-weight: 700;
     color: #544d5aac;
     font-size: 0.9rem;
+    word-wrap: break-word;
 }
 
 .comments_container .heart_inactive {
@@ -488,6 +497,9 @@ nav img{
     display: flex;
     align-items: center;
     text-decoration: none;
+    color: #5830c4;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
 }
 
 .comments_container .heart_active {

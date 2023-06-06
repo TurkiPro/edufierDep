@@ -8,8 +8,8 @@ const auth = require("../middleware/auth")
 const router = express.Router();       
 
       // get user name from db
-        fetchName = id => {
-          return User.findOne({_id: id}).then(user => user.name);
+         fetchName = async id => {
+          return await User.findOne({_id: id}).then(user => user.name);
         };
 
         //  Get each post details. 
@@ -17,28 +17,26 @@ const router = express.Router();
             let userName;
             let postUsername;
             let userComments = [];
-            const user = check_user(req);
-            fetchName(user).then(name => userName = name)
+            const user = toString(req.userId);
             Post.findById(req.params.id)
                 .populate('comments')
                 .exec(async function (err, results) {
                   if (err) { console.log(err); };
                   // call fetch name to get post user name
-                  fetchName(results.user).then(name => postUsername = name)
+                  await fetchName(results.user).then(name => postUsername = name)
                   //make a loop to call fetch name to get names of the commenters and save it in an array
                   for (let comment of results.comments) {
-                    await fetchName(comment.user).then((name) => {
+                    userName = await fetchName(comment.user)
                       comment =
                       {
                         id: comment._id,
                         text: comment.text,
                         post: comment.post,
-                        userName: name,
-                        user: comment.user,
+                        userName: userName,
+                        user: toString(comment.user),
                         hearts: comment.hearts.length,
                         date: comment.date
                       };
-                    });
                     userComments.push(comment);
                   };
                   res.render('post/show', { title: 'discussion details', post: results, comments: userComments, currentUser: user, postUsername: postUsername , user: req.userType });
