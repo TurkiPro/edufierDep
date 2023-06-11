@@ -12,7 +12,7 @@ const comment = require("./comment");
 const course = require("./course");
 const lesson = require("./lesson");
 const quiz = require('./quiz');
-
+const leadBoard = require('./leadBoard');
 
 module.exports.default = (app) => {
     app.use(express.json());
@@ -24,13 +24,11 @@ module.exports.default = (app) => {
     app.use("/control", admin);
     // app.use("/api/v1/users", users);
     app.use("/posts", post);
+    app.use("/leadboard", leadBoard);
     app.use("/comments", comment);
     app.use("/courses", course);
     app.use("/lessons", lesson);
     app.use("/quizzes", quiz);
-    app.get("/course/gamifier", function(req, res){
-        res.render('course/gamefier')
-    });
 
     // if route not available give a 404 error page
     app.get('*', function(req, res){

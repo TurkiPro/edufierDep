@@ -151,10 +151,12 @@ router.route("/fetchcourses").get(courseController.index)
                       })
                     }
                   }
-                })
+                }
+                )
                 .catch(error => {
                     res.json({ error: error })
                 })
+                res.status(200).json({message: 'success'})
          });
 
     function check_user(header){

@@ -1,35 +1,11 @@
 
 <div class="d-flex flex-row flex-nowrap" id="cards-container">
-
-        <% if (Array.isArray(information.data[0])) { %>
-            <% for (var i=0 ; i < information.data[0].length;  i=i+2 ) { %>
-                <% if (i === 0) { %>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                <%} else { %>
-                    <div class="col text-center">
-                        <h3><%= information.data[0][i] %></h3>
-                        <h5><%= information.data[0][i+1] %></h5>
-                    </div>
-                <% } %>
+        <% if (Array.isArray(information.data)) { %>
+            <% for (var i=0 ; i < information.data.length;  i++ ) { %>
+                <div class="col text-center">
+                    <h3><%= information.data[i].title %></h3>
+                    <h5><%= information.data[i].information %></h5>
+                </div>
             <% } %>
         <% } %>
 </div>
@@ -60,7 +36,7 @@ slider.addEventListener('mousemove', (e) => {
   const x = e.pageX - slider.offsetLeft;
   const walk = (x - startX) * 3; //scroll-fast
   slider.scrollLeft = scrollLeft - walk;
-  console.log(walk);
+//   console.log(walk);
 });
 
 const container = document.querySelector('.lessons_container')

@@ -17,9 +17,16 @@ const assignPoints = async (amount, completionId, userId) =>{
         completionId: completionId
     })
     // save comment
-    await points.save();
-    console.log(points)
-    return true;
+    try{
+        await points.save();
+        await User.findByIdAndUpdate(userId, { $inc: {'earnedPoints': amount } })
+        console.log(points)
+        return true;
+    }catch(err){
+        console.log(err)
+        return false;
+    }
+    
 }
 
 

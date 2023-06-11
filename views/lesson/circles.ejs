@@ -1,15 +1,15 @@
 
 <div class="d-flex justify-content-center align-items-center" id="circles_container">
     <ul class="menu">
-        <% if (Array.isArray(information.data[0])) { %>
-            <% for (var i=0 ; i < information.data[0].length;  i=i+2 ) { %>
+        <% if (Array.isArray(information.data)) { %>
+            <% for (var i=0 ; i < information.data.length;  i++ ) { %>
                 <!-- Toggle Button -->
                 <% if (i === 0) { %>
-                    <div class="toggle"><%= information.data[0][i] %><%= information.data[0][i+1] %></div>
+                    <div class="toggle"><%= information.data[i].title %><%= information.data[i].information %></div>
                 <%} else { %>
                 <!-- Menu Items -->
                     <li style="--i:<%= i %>;--clr:#ff2972;">
-                    <a href="#"><%= information.data[0][i] %><%= information.data[0][i+1] %></a>
+                    <a href="#"><%= information.data[i].title %><%= information.data[i].information %></a>
                     </li>
                 <% } %>
             <% } %>

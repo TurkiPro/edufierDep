@@ -248,10 +248,21 @@ nav img{
         width: 100%;
         justify-content: unset;
         display: flex;
+        width: auto;
     }
     .adjuster{
         width: unset;
         text-align: left;
+    }
+    .logout{
+        margin-top: auto;
+    }
+    .dashboard_bg{
+        position: fixed;
+        border-radius: 0;
+        height: 80px;
+        top: 0;
+        min-height: auto;
     }
 }
 
@@ -380,21 +391,6 @@ nav img{
     color: #5830C4;
 }
 
-@media (max-width: 1199.98px) {
-    .logout{
-        margin-top: auto;
-    }
-    .dashboard_bg{
-        position: fixed;
-        border-radius: 0;
-        height: 100px;
-        top: 0;
-        min-height: auto;
-    }
-    .nav-item{
-        width: auto;
-    }
-} 
 
 
 /* index all posts*/
@@ -559,7 +555,39 @@ nav img{
 }
 
 
+/* leader board */
 
+.leadboard_container{
+    background-color: white;
+    border-radius: 25px;
+    min-height: 80vh;
+    padding: 6em 5em;
+}
+
+.leadboard_container .row{
+    background-color: #5830C5;
+    border-radius: 25px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    padding: 1.5em 1em;
+    font-size: 1.3rem;
+}
+
+.leadboard_container .row svg{
+    fill: white;
+}
+
+@media (max-width: 1199.98px) {
+
+    .leadboard_container{
+        padding: 3em 2em;
+    }
+
+    .leadboard_container .row{
+        padding: 1em 0.3em;
+    }
+}
 
 /* lessons */
 
@@ -790,6 +818,42 @@ nav img{
 /* quizzes */
 .quizzes_container{
     height: auto;
+}
+
+.answerWrapper{
+    position: relative;
+}
+
+#success{
+    position: fixed;
+    top: 50%;
+    left: 58%;
+    padding: 4em 10em;
+    /* bring your own prefixes */
+    transform: translate(-50%, -58%);
+    z-index: 15;
+}
+#success.active .answerWrapper div{
+    background: linear-gradient(174.94deg, rgba(0, 225, 22, 0.88) 31.13%, rgba(0, 253, 25, 0.812353) 69.56%, rgba(0, 255, 25, 0.738908) 111.28%, rgba(0, 225, 22, 0) 531.07%);
+    mix-blend-mode: normal;
+    filter: blur(37px);
+    border-radius: 10px;
+    position: relative;
+}
+#success svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@media (max-width: 1199.98px) {
+
+    #success{
+        top: 50%;
+        left: 50%;
+        padding: 4em 10em;
+        transform: translate(-50%, -50%);
+    }
 }
 /* tnf */
 

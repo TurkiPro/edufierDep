@@ -4,8 +4,12 @@
           <h1><%- information.data[0] %></h1>
             <form class="d-flex justify-content-center align-items-center">
                 <div class="form-group mt-5">
-                        <div class="error" style="background-color: red;"></div>
-                        <div class="success" style="background-color: cadetblue;"></div>
+                        <div class="error" style="background-color: red;">
+
+                        </div>
+                        <div id="success">
+
+                        </div>
                         <div class="text-center">
                           <label class="px-3 px-lg-5" for="correct">
                             <input type="radio" name="answer" id="correct" value="true">
@@ -47,7 +51,20 @@
         return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
       }
       console.log(data)
-    location.reload();
+      if(data.answer == true){
+        console.log('yeah boi')
+        let correctAnswer = document.getElementById('success');
+        correctAnswer.classList.add('active')
+        correctAnswer.innerHTML = '<div class="answerWrapper">'+
+                                    '<div></div>'+
+                                    '<svg id="answerImg" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                      '<path d="M23.9725 0C30.6407 0 36.6475 2.67371 40.9461 7.05613C45.3272 11.3696 48 17.3782 48 24.0345C48 30.6908 45.3272 36.6442 40.9461 41.0128C36.6338 45.3264 30.6269 48 23.9725 48C17.318 48 11.3663 45.3264 7.05403 41.0128C2.67287 36.6304 0 30.6219 0 24.0345C0 17.4471 2.67287 11.3559 7.05403 7.05613C11.3663 2.67371 17.3732 0 23.9725 0ZM25.1435 9.7296L28.9322 17.1163L37.1573 18.4256C37.8737 18.4945 38.3284 19.2111 38.2733 19.9277C38.2044 20.2585 38.0803 20.4514 37.8875 20.6444L32.0046 26.5288L33.3135 34.7563C33.4375 35.4729 32.9277 36.1344 32.1975 36.2584C31.8669 36.3273 31.5499 36.2584 31.3433 36.1344L23.9587 32.3446L16.5741 36.1344C15.9265 36.4652 15.0723 36.2032 14.7417 35.5417C14.6177 35.2799 14.6177 35.0181 14.6177 34.7563L15.9955 26.5288L10.0575 20.6444C9.53393 20.1207 9.53393 19.2663 10.0575 18.7564C10.3192 18.5634 10.581 18.4256 10.9116 18.3704L19.0127 17.1301L22.8014 9.7434C23.1321 9.02678 23.9173 8.76497 24.5649 9.09572C24.8266 9.28866 25.0884 9.48155 25.1573 9.7434L25.1435 9.7296ZM26.8382 18.9355L23.9587 13.2577L21.0793 18.9355C20.8864 19.3214 20.5557 19.5831 20.1011 19.652L13.8324 20.6306L18.3375 25.0681C18.5993 25.3988 18.7922 25.7847 18.7233 26.2394L17.6762 32.51L23.3525 29.6296C23.6831 29.4366 24.1378 29.4366 24.5236 29.6296L30.1998 32.51L29.2216 26.3084C29.0976 25.8536 29.2216 25.3988 29.5522 25.0681L34.0574 20.6306L27.8577 19.652C27.403 19.5831 27.0035 19.3214 26.8106 18.9355H26.8382ZM39.0448 8.94415C35.1872 5.08541 29.8967 2.67364 23.9587 2.67364C18.0207 2.67364 12.7854 5.08541 8.94151 8.94415C5.08388 12.8029 2.67279 18.1499 2.67279 24.0345C2.67279 29.9191 5.08388 35.2111 8.94151 39.056C12.7991 42.9148 18.0896 45.3264 23.9587 45.3264C29.8278 45.3264 35.1872 42.9148 39.0448 39.056C42.9024 35.1973 45.3134 29.9053 45.3134 24.0345C45.3134 18.1637 42.9024 12.8029 39.0448 8.94415Z" fill="#464646"/>'+
+                                    '</svg>'+
+                                  '</div>'
+      let makeHeight = document.getElementsByClassName('answerWrapper')[0].firstChild
+      makeHeight.style.height = document.getElementById("success").clientHeight+'px';
+      makeHeight.style.width = document.getElementById("success").clientWidth+'px';
+      }
     } catch (err) {
         console.log(err.message)
       }

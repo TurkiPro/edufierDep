@@ -19,8 +19,8 @@
                         <div class="col-3">
                             <a class="<% if (comment.hearts) { __append('heart_active') }else{__append('heart_inactive')} %>" onclick="likedComment(this)" data-id="<%= comment.id %>"><%= comment.hearts %></a>
                         </div>
-                        <div class="col-9 current_user_comment">
-                            <h3 dir="auto">You</h3>
+                        <div class="col-9">
+                            <h3 class="current_user_comment">You</h3>
                             <p dir="auto"><%= comment.text %></p>
                         </div>
                     </div>

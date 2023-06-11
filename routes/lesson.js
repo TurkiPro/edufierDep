@@ -51,6 +51,8 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
         router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
             // find out which course you are adding a lesson to
             let lesson;
+            let dataArray = [];
+            let tempLessonData;
             const id = req.params.id;
             // find the user
             const user = check_user(req);
@@ -62,27 +64,53 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
             for (let index = 0; index < req.body.tries; index++) {
                 points[index] = req.body.points[index];
             }
-            if(req.body.lessonType == 4){
-            // get the lesson info and record course id
-            console.log(req.body.yPos);
-                lesson = new Lesson({
-                    name: req.body.name,
-                    typeOfLesson: req.body.lessonType,
-                    data: [req.files['interImg'][0].filename,req.files['interAud'][0].filename,req.body.information,req.body.xPos, req.body.yPos],
-                    givePoints: isTrueSet,
-                    maxTries: req.body.tries,
-                    pointsArray: points,
-                    course: id
-            })}else{
-                lesson = new Lesson({
-                    name: req.body.name,
-                    typeOfLesson: req.body.lessonType,
-                    data: [req.body.information],
-                    givePoints: isTrueSet,
-                    maxTries: req.body.tries,
-                    pointsArray: points,
-                    course: id
-            })}
+            switch(req.body.lessonType){
+                case '1':
+                    lesson = new Lesson({
+                        name: req.body.name,
+                        typeOfLesson: req.body.lessonType,
+                        data: [req.body.information],
+                        givePoints: isTrueSet,
+                        maxTries: req.body.tries,
+                        pointsArray: points,
+                        course: id
+                    })
+                case '2':
+                case '3':
+                    for (let index = 0; index < req.body.information.length; index = index+2) {
+                        tempLessonData = {
+                            title: req.body.information[index],
+                            information: req.body.information[index+1]
+                        }
+                        dataArray.push(tempLessonData);
+                    }
+                    lesson = new Lesson({
+                        name: req.body.name,
+                        typeOfLesson: req.body.lessonType,
+                        data: dataArray,
+                        givePoints: isTrueSet,
+                        maxTries: req.body.tries,
+                        pointsArray: points,
+                        course: id
+                    })
+                    console.log(lesson)
+                    break;
+                case '4':
+                    break;
+                case '5':
+                    // get the lesson info and record course id
+                    console.log(req.body.yPos);
+                    lesson = new Lesson({
+                        name: req.body.name,
+                        typeOfLesson: req.body.lessonType,
+                        data: [req.files['interImg'][0].filename,req.files['interAud'][0].filename,req.body.information,req.body.xPos, req.body.yPos],
+                        givePoints: isTrueSet,
+                        maxTries: req.body.tries,
+                        pointsArray: points,
+                        course: id
+                    })
+                    break;
+            }
             // save lesson
             await lesson.save();
             // get this particular course
@@ -240,6 +268,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                 .catch(error => {
                     res.json({ error: error })
                 })
+                res.status(200).json({message: 'success'})
          });
 
         function check_user(header){

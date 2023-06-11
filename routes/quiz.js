@@ -68,7 +68,7 @@ const router = express.Router();
                         await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray, quizz.maxTries, true).then(result =>{
                             if(result == true){
                                 console.log('done correct')
-                                res.json({ message: 'Good job!' })
+                                res.status(200).json({ answer: true, message: 'Good job!' })
                             }
                         })
                         .catch(error =>{
@@ -80,7 +80,7 @@ const router = express.Router();
                         await completion.addCompletion('quizz', quizzId, user, quizz.pointsArray, quizz.maxTries, false).then(result =>{
                             if(result == true){
                                 console.log('done wrong')
-                                res.json({ message: 'wrong answer' })
+                                res.status(200).json({ answer: false, message: 'wrong answer' })
                             }
                         })
                         .catch(error =>{
@@ -189,8 +189,8 @@ const router = express.Router();
                     await Lesson.findById(quizz.lesson).then(lesson => {
                         lesson.quizzes.pull(quizzId);
                         console.log(lesson.quizzes)
+                        res.status(200).json({message: 'success'})
                     })
-                    
                     // res.render('quiz/show /lesson/:id/quizzes/', {title: quizz.name, information: quizz})
                 })
                 .catch(error => {
