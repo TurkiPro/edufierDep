@@ -49,23 +49,21 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
            })
         // Create and Post lessons
         router.post('/course/:id/lesson/new',upload.fields([{ name: 'interAud', maxCount: 1 }, { name: 'interImg', maxCount: 1 }]), auth.verifyAuth, admin.verifyAdministration, async (req, res) => {
-            // find out which course you are adding a lesson to
             let lesson;
             let dataArray = [];
+            //used as an object for data array
             let tempLessonData;
+            // find out which course you are adding a lesson to
             const id = req.params.id;
-            // find the user
-            const user = check_user(req);
-            if(user === null){
-                res.redirect('/')
-            }
             const isTrueSet = (String(req.body.pointstf).toLowerCase() === 'true');
             let points = [];
             for (let index = 0; index < req.body.tries; index++) {
                 points[index] = req.body.points[index];
             }
+            // set the lesson info and record course id in lesson object
             switch(req.body.lessonType){
                 case '1':
+                    //video type lesson
                     lesson = new Lesson({
                         name: req.body.name,
                         typeOfLesson: req.body.lessonType,
@@ -77,6 +75,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                     })
                 case '2':
                 case '3':
+                    //cicle and cards type lesson
                     for (let index = 0; index < req.body.information.length; index = index+2) {
                         tempLessonData = {
                             title: req.body.information[index],
@@ -96,9 +95,10 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                     console.log(lesson)
                     break;
                 case '4':
+                    //three cards type lesson
                     break;
                 case '5':
-                    // get the lesson info and record course id
+                    //interactive image type lesson
                     console.log(req.body.yPos);
                     lesson = new Lesson({
                         name: req.body.name,

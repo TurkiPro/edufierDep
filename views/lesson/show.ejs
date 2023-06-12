@@ -6,13 +6,15 @@
             <div class="col-sm mt-xxl-0 mt-xl-0 mt-lg-5 mt-md-5 mt-sm-5 mt-5 pt-xxl-3 pt-xl-3 pt-lg-5 pt-sm-5 pt-5 p-3. min-vh-100">
                 <div class="container lessons_container">
                     <% if (information.typeOfLesson === 1) { %>
-                        <%- include('video.ejs') -%>
+                        <%- include('lesson_types/video.ejs') -%>
                     <%} else if (information.typeOfLesson === 2) { %>
-                        <%- include('circles.ejs') -%>
+                        <%- include('lesson_types/circles.ejs') -%>
                     <%} else if (information.typeOfLesson === 3) { %>
-                        <%- include('cards.ejs') -%>
+                        <%- include('lesson_types/cards.ejs') -%>
+                    <%} else if (information.typeOfLesson === 4) { %>
+                        <%- include('lesson_types/three_cards.ejs') -%>
                     <%} else if (information.typeOfLesson === 5) { %>
-                        <%- include('interactive_image.ejs') -%>
+                        <%- include('lesson_types/interactive_image.ejs') -%>
                     <%} else  { %>
                     <p> Other type </p>
                     <% } %>
