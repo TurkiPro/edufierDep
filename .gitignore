@@ -1,1 +1,7 @@
 /node_modules
+
+public/uploads/**
+public/uploads/courses/**
+!public/uploads/courses/README.md
+public/uploads/courses/lessons/**
+!public/uploads/courses/lessons/README.md
