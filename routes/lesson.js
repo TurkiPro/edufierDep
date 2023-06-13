@@ -96,6 +96,22 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
                     break;
                 case '4':
                     //three cards type lesson
+                    tempLessonData = {
+                        title: req.body.information[0],
+                        information: [req.body.information[1], req.body.information[2], req.body.information[3]]
+                    }
+                    dataArray.push(tempLessonData);
+
+                    lesson = new Lesson({
+                        name: req.body.name,
+                        typeOfLesson: req.body.lessonType,
+                        data: dataArray,
+                        givePoints: isTrueSet,
+                        maxTries: req.body.tries,
+                        pointsArray: points,
+                        course: id
+                    })
+                    console.log(lesson)
                     break;
                 case '5':
                     //interactive image type lesson
@@ -120,7 +136,7 @@ const upload = multer({dest: 'public/uploads/courses/lessons', fileFilter: fileF
             // save and redirect...
             await courseRelated.save(function(err) {
             if(err) {console.log(err)}
-            res.redirect('/lessons/')
+            res.redirect('/lessons/1')
             })
 
         })

@@ -733,6 +733,107 @@ nav img{
     transform: scale(1);
 }
 
+/* three cards */
+
+#three-cards-container{
+    
+}
+
+#three-cards-container svg{
+    margin-bottom: 11rem;
+}
+#three-cards-container #title{
+    display: none;
+}
+.three_cards_item{
+    display: none;
+}
+.three_cards_item.active:nth-child(2){
+    display: block;
+    position: absolute;
+    top: 35%;
+    left: 49%;
+    transform: translate(-49%, -35%);
+    background-color: #D7D5B4;
+    border-radius: 50%;
+    min-height: 215px;
+    min-width: 215px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.three_cards_item.active:nth-child(3){
+    display: block;
+    position: absolute;
+    top: 35%;
+    left: 70%;
+    transform: translate(-70%, -35%);
+    background-color: #12C4B2;
+    border-radius: 50%;
+    min-height: 215px;
+    min-width: 215px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.three_cards_item.active:nth-child(4){
+    display: block;
+    position: absolute;
+    top: 65%;
+    left: 60%;
+    transform: translate(-65%, -60%);
+    background-color: #DF7377;
+    border-radius: 50%;
+    min-height: 215px;
+    min-width: 215px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#three-cards-container #title.active{
+    display: block;
+    position: absolute;
+    bottom: 10%;
+    background-color: white;
+    border-radius: 25px;
+    padding: 4em 12em;
+}
+
+@media (max-width: 1199.98px) {
+    .three_cards_item.active:nth-child(2){
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        transform: translate(-10%, -25%);
+        border-radius: 50%;
+        min-height: 155px;
+        min-width: 155px;
+    }
+    .three_cards_item.active:nth-child(3){
+        position: absolute;
+        top: 25%;
+        left: 90%;
+        transform: translate(-90%, -25%);
+        border-radius: 50%;
+        min-height: 155px;
+        min-width: 155px;
+    }
+    .three_cards_item.active:nth-child(4){
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -75%);
+        min-height: 155px;
+        min-width: 155px;
+    }
+
+    #three-cards-container #title.active{
+        bottom: 0%;
+        padding: 4em 8em;
+    }
+}
+
 /* video lesson */
 
 .lessons_container > #video-container{

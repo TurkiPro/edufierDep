@@ -95,9 +95,11 @@
         }
         function threeCards(){
           document.getElementById('data-input').innerHTML = ''
-            document.getElementById('data-input').innerHTML += '<input type="number" class="form-control" id="Information-number" placeholder="Enter the number of Information wanted in this type of lesson">';
-            let infoEle = document.getElementById('Information-number')
-            infoEle.addEventListener("change", dataEntries); 
+          document.getElementById('data-entries').innerHTML = ''
+          document.getElementById('data-entries').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter main title">'
+        for (let index = 0; index < 3; index++) {
+            document.getElementById('data-entries').innerHTML += '<input type="text" class="form-control" name="information" placeholder="Enter information for the ('+(index+1)+') ">';
+          }
         }
         function interactiveImage(){
             document.getElementById('data-input').innerHTML = ''
