@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <input type="text" placeholder="search" class="search_container">
+                            <input type="text" placeholder="Search" class="search_container" id="searchInput">
                         </div>
                     </div>
                 <div class="container posts_container">
@@ -15,8 +15,8 @@
                     <a href="/posts/post/<%= post.id %>">
                         <div class="row mt-3 align-items-center">
                             <div class="col-10">
-                                <h3><%= post.title %> </h3>
-                                <h4><%= post.text %> </h4>
+                                <h3><%- post.title %> </h3>
+                                <h4><%- post.text %> </h4>
                                 <%
                                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                                 %>
@@ -73,5 +73,32 @@
         })
     }
     </script> -->
+    <script>
+        // Get the search input element
+        const searchInput = document.getElementById('searchInput');
+      
+        // Attach a 'keyup' event listener to the search input
+        searchInput.addEventListener('keyup', handleSearch);
+      
+        function handleSearch() {
+          const searchText = searchInput.value.trim().toLowerCase(); // Get the search text and normalize it
+      
+          // Get all the post elements
+          const postElements = document.querySelectorAll('.posts_container > a');
+      
+          // Loop through the post elements to show/hide based on search text
+          postElements.forEach((postElement) => {
+            const postTitle = postElement.querySelector('h3').textContent.toLowerCase();
+            const postText = postElement.querySelector('h4').textContent.toLowerCase();
+      
+            if (postTitle.includes(searchText) || postText.includes(searchText)) {
+              postElement.style.display = 'block'; // Show the post element
+            } else {
+              postElement.style.display = 'none'; // Hide the post element
+            }
+          });
+        }
+      </script>
+      
 </body>
 </html>
