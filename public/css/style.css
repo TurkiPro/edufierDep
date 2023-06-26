@@ -397,7 +397,31 @@ nav img{
     color: #5830C4;
 }
 
+/* user nav */
 
+.user_nav{
+    background-color: white;
+    border-radius: 50px;
+    color: #5830C5;
+}
+
+.user_nav b{
+    color: #5830C5;
+    font-size: 1.3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+}
+
+.user_nav svg path:nth-child(odd){
+    stroke: #5830C5;
+}
+.user_nav svg path:nth-child(even){
+    stroke: #5830C5;
+}
+
+.user_nav svg.active path:nth-child(even){
+    fill: #5830C5;
+}
 
 /* index all posts*/
 
