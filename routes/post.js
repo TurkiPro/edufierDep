@@ -25,6 +25,7 @@ router.get("/post/:id", auth.verifyAuth, async (req, res) => {
       if (err) {
         console.log(err);
       }
+      const postHearts = results.hearts.length;
       // call fetch name to get post user name
       await fetchName(results.user).then((name) => (postUsername = name));
       //make a loop to call fetch name to get names of the commenters and save it in an array
@@ -48,6 +49,7 @@ router.get("/post/:id", auth.verifyAuth, async (req, res) => {
         currentUser: user,
         postUsername: postUsername,
         user: req.userType,
+        postHearts: postHearts
       });
     });
 });
@@ -58,6 +60,25 @@ router.get("/new", auth.verifyAuth, (req, res) => {
     user: req.userType,
   });
 });
+
+router.post('/post/:id/heart', auth.verifyAuth, async(req, res) => {
+  const id = req.userId;
+  Post.findById(req.params.id).then(async post => {
+      if(post.hearts.includes(id)){
+        post.hearts.pull(id);
+          await post.save()
+          res.status(200).json({message: 'Post has been un liked'})
+      }else{
+        post.hearts.push(id);
+          await post.save()
+          console.log(post)
+          res.status(200).json({message: 'Post has been liked'})
+      }
+  }).catch(err => {
+      console.log(err)
+      res.status(404).json({message: 'error'})
+  })
+})
 
 router.post(
   "/new",

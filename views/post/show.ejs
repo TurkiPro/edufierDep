@@ -11,7 +11,7 @@
                             <p dir="auto"><%= post.text %></p>
                         </div>
                         <div class="col-3 ">
-                            <a class="heart_inactive" onclick="likedPost(this)" data-id="<%= post.id %>"></a>
+                            <a class="<% if (postHearts) { __append('heart_active') }else{__append('heart_inactive')} %>" onclick="likedPost(this)" data-id="<%= post.id %>"><%= postHearts %></a>
                         </div>
                     </div>
                     <% comments.forEach(function(comment, i){ %>
@@ -63,5 +63,24 @@
             }
         }
     </script>
+        <script>
+            async function likedPost (element){
+                 const likedPost = element.dataset.id;
+                 try {
+                 const res = await fetch('/posts/post/'+likedPost+'/heart', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' }
+                 })
+                 const data = await res.json()
+                 if (res.status === 400 || res.status === 401) {
+                 return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
+                 }
+                 console.log(data)
+             location.reload();
+             } catch (err) {
+                 console.log(err.message)
+                 }
+             }
+         </script>
 </body>
 </html>
