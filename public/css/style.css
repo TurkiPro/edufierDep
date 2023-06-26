@@ -1027,7 +1027,9 @@ input[type="radio"]:checked ~ label {
     font-size: 1.25rem;
 }
 
-
+.search_container{
+    border-radius: 25px;
+}
 
 
 
