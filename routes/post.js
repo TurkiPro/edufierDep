@@ -44,7 +44,6 @@ router.get("/post/:id", auth.verifyAuth, async (req, res) => {
         userComments.push(comment);
       }
       res.render("post/show", {
-        isNewPost: isNewPost,
         title: "discussion details",
         post: results,
         comments: userComments,

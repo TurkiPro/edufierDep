@@ -11,12 +11,24 @@
                         </div>
                     </div>
                 <div class="container posts_container">
+                    <% function isNewPost(postDate) {
+                        const twentyFourHoursAgo = new Date();
+                        twentyFourHoursAgo.setDate(twentyFourHoursAgo.getDate() - 1);
+                      
+                        // Check if the post date is within the previous 24 hours
+                        return new Date(postDate) > twentyFourHoursAgo;
+                    } %>
                     <% posts.forEach(function(post, i){ %>
                     <a href="/posts/post/<%= post.id %>">
                         <div class="row mt-3 align-items-center">
                             <div class="col-10">
-                                <h3><%- post.title %></h3>
-                                <h4><%- post.text %> </h4>
+                                <h3><%- post.title %> </h3>                                
+                                <h4>
+                                    <%- post.text %>
+                                    <% if (isNewPost(post.date)) { %>
+                                        <span class="badge bg-primary" style="float: right;">New</span>
+                                    <% } %>
+                                </h4>
                                 <%
                                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                                 %>
