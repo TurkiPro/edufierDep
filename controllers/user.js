@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const service = require("../service/mongo.service");
 const { body, validationResult } = require("express-validator");
+const nodemailer = require("nodemailer");
 
 // regiser user
 
