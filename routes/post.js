@@ -19,7 +19,6 @@ router.get("/post/:id", auth.verifyAuth, async (req, res) => {
   let postUsername;
   let userComments = [];
   const user = toString(req.userId);
-  const isNewPost = !req.user.openedPosts.includes(req.params.id);
   Post.findById(req.params.id)
     .populate("comments")
     .exec(async function (err, results) {

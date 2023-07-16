@@ -94,11 +94,11 @@ exports.login = [
       }
 
       // Check if user email is confirmed
-      if (!user.confirmed) {
-        throw new Error.Unauthorized(
-          "Please confirm your email to login."
-        );
-      }
+      // if (!user.confirmed) {
+      //   throw new Error.Unauthorized(
+      //     "Please confirm your email to login."
+      //   );
+      // }
 
       let token = jwt.sign(
         { _id: user._id, roles: user.roles },

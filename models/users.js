@@ -28,7 +28,7 @@ const userSchema = Schema({
         required: "password is required"
     },
     confirmed: {
-        type: DataType.BOOLEAN,
+        type: Boolean,
         defaultValue: false,
     },
     roles: {
