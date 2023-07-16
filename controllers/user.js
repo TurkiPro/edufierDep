@@ -94,7 +94,7 @@ exports.login = [
       }
 
       // Check if user email is confirmed
-      // if (!user.confirmed) {
+      // if (!user.isVerified) {
       //   throw new Error.Unauthorized(
       //     "Please confirm your email to login."
       //   );

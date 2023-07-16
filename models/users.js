@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+//temporary for tetsing email token
+const crypto = require('crypto');
+
 Schema = mongoose.Schema;
 
 const profileSchema = Schema({
@@ -27,9 +30,13 @@ const userSchema = Schema({
         type: String,
         required: "password is required"
     },
-    confirmed: {
+    isVerified: {
         type: Boolean,
         defaultValue: false,
+    },
+    emailToken: {
+        type: String,
+        default: crypto.randomBytes(64).toString('hex'),
     },
     roles: {
         type: [
